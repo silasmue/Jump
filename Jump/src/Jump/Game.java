@@ -20,20 +20,39 @@ public class Game implements Runnable{
     private boolean running = false;
     /*Gamethread*/
     private Thread t;
+    /**
+     * Handler (the handler contains a list with all game opjects and can manage them)
+     */
+    private Handler h;
+    
+    /**
+     * Game Constructor
+     * @param pWidth width of display
+     * @param pHeight height of display
+     * starts the gameloop.
+     */
     
     public Game(int pWidth, int pHeight) {
         this.WIDTH = pWidth;
         this.HEIGHT = pHeight;
-        start();
+       start(); 
         
-        Handler h = new Handler();
+        h = new Handler();
     }
+    
+    /**
+     * starts the gameloop in a new thread
+     */
     
     public synchronized void start() {
         t = new Thread(this);
         t.start();
         running = true;
     }
+    
+    /**
+     * interrupts the gameloop thread and with it the gameloop 
+     */
     
     public synchronized void stop() {
         try {
@@ -44,6 +63,11 @@ public class Game implements Runnable{
         }    
 
     }
+    
+    /**
+     * Gameloop method
+     * Gameloop let the game update 60 times per second and renders the frames as often as possible.
+     */
     
     @Override
     public void run() {

@@ -6,45 +6,40 @@
 package Jump;
 
 import java.util.LinkedList;
-
+import javafx.scene.shape.Shape;
 
 /**
  *
- * @author Silas Mueller
+ * @author news
  */
-
-/*This class contains a linked list of all gameobjects and functions to manage them*/
 public class Handler {
-    /**
-     * LinkedList of the type GameObject.
-     * The list holds every object in the game.
-     */
-    LinkedList<GameObject> object = new LinkedList<GameObject>();
+    private LinkedList<GameObject> gameObject;
     
     public Handler() {
-        
+        gameObject = new LinkedList();
     }
-    /**
-     * Let every Object in the game tick.
-     *  When an object ticks it executes it's internal tick algorithm
-     */
+    
+    public LinkedList<Shape> initRender() {
+        LinkedList<Shape> shape = new LinkedList<Shape>();
+        for(int i = 0; i < gameObject.size(); i++) {
+            shape.add(gameObject.get(i).initRender());
+        }
+        return shape;
+    }
+        
+    public void updateRender() {
+        for(int i = 0; i < gameObject.size(); i++) {
+            gameObject.get(i).updateRender();
+        }
+    }
+    
     public void tick() {
-        for(int i = 0; i < object.size(); i++) {
-            object.get(i).tick();
-        }
-    }
-    /**
-     * The render-method executes every gamobjects render-method.
-     */
-    public void render(/*something like graphics g in javaFX*/) {
-        for(int i = 0; i < object.size(); i++) {
-            object.get(i).render(/*something like graphics g in javaFX*/);
+        for(int i = 0; i < gameObject.size(); i++) {
+            gameObject.get(i).tick();
         }
     }
     
-    public void add(GameObject tmpObject) {
-        object.add(tmpObject);
+    public void add(GameObject pGo) {
+        gameObject.add(pGo);
     }
-        
-    
 }

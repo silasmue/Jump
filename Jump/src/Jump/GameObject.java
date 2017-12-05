@@ -5,52 +5,26 @@
  */
 package Jump;
 
-import java.awt.Graphics;
+import javafx.scene.shape.Shape;
 
 /**
  *
  * @author news
  */
 public abstract class GameObject {
-    /**
-     * x-position of gameobject
-     */
-    protected int x;
-    /**
-     * y-position of gameobject
-     */
-    protected int y;
-    /**
-     * gameobject's velocity in x-direction
-     * 0 is no movement
-     * positive value is movement leftwards
-     * negative value is movement rightwards
-     */
-    protected int velX;
-    /**
-     * gameobject's velocity in y-direction
-     * 0 is no movement
-     * positive value is movement downwards
-     * negative value is movement upwards
-     */
-    protected int velY;
-    /**
-     * ID of the game object used as type of the game object see enumerations ID.java
-     */
+    protected int x, y;
+    protected int velX, velY;
     protected ID id;
     
-    public GameObject(int pX, int pY, ID pId) {
+    public GameObject(int pX, int pY, ID pID) {
         this.x = pX;
         this.y = pY;
-        this.id = pId;
+        this.id = pID;
     }
     
+    public abstract Shape initRender();
     public abstract void tick();
-    public abstract void render(/*something like graphics g in javaFX*/);
-    
-    /**
-     * Getters and Setters for x, y, velX and velY
-     */
+    public abstract void updateRender();
 
     public int getX() {
         return x;
@@ -83,6 +57,7 @@ public abstract class GameObject {
     public void setVelY(int velY) {
         this.velY = velY;
     }
-       
+    
+    
     
 }

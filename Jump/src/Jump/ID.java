@@ -7,7 +7,7 @@ package Jump;
 
 /**
  *
- * @author Silas Mueller
+ * @author news
  */
 public enum ID {
     Player(),

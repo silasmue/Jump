@@ -1,136 +1,66 @@
-package Jump;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Jump;
+
+import java.util.LinkedList;
+import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
 
 /**
  *
- * @author Silas Mueller
+ * @author news
  */
-public class Game implements Runnable{
+public class Game extends Application{
     
-    /*Display width*/
-    private int WIDTH;
-    /*Display height in relation to display height (Realtion 16/9 (WIDTH/HEIGHT))*/
-    private int HEIGHT;
-    /*True if gameloop is running*/
-    private boolean running = false;
-    /*Gamethread*/
-    private Thread t;
-    /**
-     * Handler (the handler contains a list with all game opjects and can manage them)
-     */
-    private Handler h;
+    private final int WIDTH = 1920;
+    private final int HEIGHT = WIDTH * (9/16);
     
-    /**
-     * Game Constructor
-     * @param pWidth width of display
-     * @param pHeight height of display
-     * starts the gameloop.
-     */
-    
-    public Game(int pWidth, int pHeight) {
-        this.WIDTH = pWidth;
-        this.HEIGHT = pHeight;
-       start(); 
-        
-        h = new Handler();
-    }
-    
-    /**
-     * starts the gameloop in a new thread
-     */
-    
-    public synchronized void start() {
-        t = new Thread(this);
-        t.start();
-        running = true;
-    }
-    
-    /**
-     * interrupts the gameloop thread and with it the gameloop 
-     */
-    
-    public synchronized void stop() {
-        try {
-            t.join();
-            running = false;
-        }
-        catch(InterruptedException e) {
-        }    
+    private Handler handler;
 
-    }
-    
-    /**
-     * Gameloop method
-     * Gameloop let the game update 60 times per second and renders the frames as often as possible.
-     */
-    
     @Override
-    public void run() {
-        /**
-         * Starttime nanoseconds timestamp
-         */
-        long startTime = System.nanoTime();
-        /*Targeted FPS*/
-        double targetedFPS = 60;
-        /**
-         * 1000000000ns is one second devided by targeted fps of a second in nanoseconds
-         */
-        double ns = 1000000000 / targetedFPS;
-        /**
-         * frame counter
-         */
-        int frames = 0;
-        /**
-         * Difference between frames
-         */
-        double difference = 0;
-        /**
-         * Timer to print FPS
-         */
-        long timer = System.currentTimeMillis();
+    public void start(Stage stage) {
         
-        /**
-         * Game renders as often as it can and ticks 60 times per second if possible
-         */        
+        initGame();
         
-        while(running) {
-            /**
-             * Actual system time stamp in milliseconds
-             */
-            long now = System.nanoTime();
-            difference = difference + (now - startTime) /ns;
-            startTime = now;
-            while(difference >= 1) {
-                tick();
-                difference--;
-            }
-            if(running) {
-                render();
-            }
-            frames++;
-            if(System.currentTimeMillis() - timer > 1000) {
-                timer = timer + 1000;
-                System.out.println("FPS: " + frames);
-                frames = 0;
-            }
+        stage.setTitle("Jump");
+        
+        Group root = new Group();
+        Scene scene = new Scene(root, WIDTH, HEIGHT);
+        
+        LinkedList<Shape> shape = new LinkedList<Shape>();
+        shape = handler.initRender();
+        for(int i = 0; i < shape.size(); i++) {
+            root.getChildren().add(shape.get(i));
         }
-        stop();
+        stage.setScene(scene);
+        stage.show();
+        AnimationTimer at = new AnimationTimer() {
+           
+            @Override
+            public void handle(long now) {
+               handler.tick();
+               handler.updateRender();
+           }
+        };
+        at.start();
     }
     
-    private void tick() {
-        h.tick();
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+    private void initGame() {
+        handler = new Handler();
         
-    }
-    
-    private void render() {
-        h.render(/*something like graphics g in javaFX*/);
-        
-    }
-    
-    
+        handler.add(new Player(200, 300, ID.Player));
+    }   
 }

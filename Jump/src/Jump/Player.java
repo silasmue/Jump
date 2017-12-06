@@ -11,7 +11,7 @@ import javafx.scene.shape.Shape;
 
 /**
  *
- * @author news
+ * @author Silas Müller
  */
 public class Player extends GameObject{
     private Rectangle player;
@@ -34,7 +34,7 @@ public class Player extends GameObject{
         player.setHeight(128);
         player.setArcHeight(0);
         player.setArcWidth(0);
-        
+                
         return player;
         
     }

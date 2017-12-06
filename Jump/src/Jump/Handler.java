@@ -10,7 +10,7 @@ import javafx.scene.shape.Shape;
 
 /**
  *
- * @author news
+ * @author Silas Müller
  */
 public class Handler {
     private LinkedList<GameObject> gameObject;
@@ -41,5 +41,9 @@ public class Handler {
     
     public void add(GameObject pGo) {
         gameObject.add(pGo);
+    }
+    
+    public LinkedList<GameObject> getGameObjects() {
+        return gameObject;
     }
 }

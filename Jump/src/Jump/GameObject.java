@@ -9,7 +9,7 @@ import javafx.scene.shape.Shape;
 
 /**
  *
- * @author news
+ * @author Silas Müller
  */
 public abstract class GameObject {
     protected int x, y;
@@ -56,6 +56,10 @@ public abstract class GameObject {
 
     public void setVelY(int velY) {
         this.velY = velY;
+    }
+    
+    public ID getID() {
+        return id;
     }
     
     

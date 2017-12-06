@@ -24,12 +24,28 @@ import javafx.stage.Stage;
  */
 public class Game extends Application{
     
+    /**
+     * width of the area which is displayed
+     */
     private final int WIDTH = 1920;
+    /**
+     * height of the area which is displayed
+     */
     private final int HEIGHT = WIDTH * (9/16);
     
+    /**
+     * instance of Handler to get access to all objects in the game (GameObject)
+     */
     private Handler handler;
+    /**
+     * instance of KeyInput which manages the keyboard input
+     */
     private KeyInput keyListener;
-
+    
+    /**
+     * JavaFX start-Method
+     * @param stage primary stage (see JavaFX start)
+     */
     @Override
     public void start(Stage stage) {
         
@@ -53,6 +69,12 @@ public class Game extends Application{
         stage.show();
         
         AnimationTimer at = new AnimationTimer() {
+            /**
+             * JavaFX Animationtimer handle-method
+             * updates (tick()) and renders (updateRender()) the game 60 times per second
+             * @param now (JavaFX AnimationTimer start(long arg))
+             */
+            
             @Override
             public void handle(long now) {
                handler.tick();
@@ -61,11 +83,19 @@ public class Game extends Application{
         };
         at.start();
     }
-            
+    
+    /**
+     * main-method calls JavaFX launch(args) which starts the Application (see Application)
+     * @param args 
+     */
     public static void main(String[] args) {
         launch(args);
     }
     
+    /**
+     * initializes and instance of Handler and and instance of KeyInput
+     * initializes the game-objects
+     */
     private void initGame() {
         handler = new Handler();
         keyListener = new KeyInput(handler);

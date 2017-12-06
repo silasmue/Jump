@@ -77,8 +77,10 @@ public class Game extends Application{
             
             @Override
             public void handle(long now) {
-               handler.tick();
+               handler.tick((long) now);
                handler.updateRender();
+               KeyInput.processKeys();
+               System.out.println(now);
            }
         };
         at.start();

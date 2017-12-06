@@ -23,7 +23,7 @@ public abstract class GameObject {
     }
     
     public abstract Shape initRender();
-    public abstract void tick();
+    public abstract void tick(int diff);
     public abstract void updateRender();
 
     public int getX() {

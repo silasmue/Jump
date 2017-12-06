@@ -40,7 +40,7 @@ public class Player extends GameObject{
     }
 
     @Override
-    public void tick() {
+    public void tick(int time) {
         x += velX;
         y += velY;
     }

@@ -5,6 +5,7 @@
  */
 package com.zeptosi.jump;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javafx.scene.shape.Shape;
 
@@ -13,10 +14,10 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller
  */
 public class Handler {
-    private LinkedList<GameObject> gameObject;
+    private ArrayList<GameObject> gameObject;
     
     public Handler() {
-        gameObject = new LinkedList();
+        gameObject = new ArrayList<>();
     }
     
     public LinkedList<Shape> initRender() {
@@ -33,9 +34,9 @@ public class Handler {
         }
     }
     
-    public void tick() {
+    public void tick(long now) {
         for(int i = 0; i < gameObject.size(); i++) {
-            gameObject.get(i).tick();
+            gameObject.get(i).tick(0);
         }
     }
     
@@ -43,7 +44,7 @@ public class Handler {
         gameObject.add(pGo);
     }
     
-    public LinkedList<GameObject> getGameObjects() {
+    public ArrayList<GameObject> getGameObjects() {
         return gameObject;
     }
 }

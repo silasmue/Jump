@@ -32,7 +32,6 @@ public class Game extends Application{
      * height of the area which is displayed
      */
     private final int HEIGHT = WIDTH * (9/16);
-    
     /**
      * instance of Handler to get access to all objects in the game (GameObject)
      */
@@ -41,11 +40,14 @@ public class Game extends Application{
      * instance of KeyInput which manages the keyboard input
      */
     private KeyInput keyListener;
-    
+    /**
+     * 
+     */
+    private int playerIndex;
     /**
      * JavaFX start-Method
      * @param stage primary stage (see JavaFX start)
-     */
+     */    
     @Override
     public void start(Stage stage) {
         
@@ -61,27 +63,15 @@ public class Game extends Application{
         for(int i = 0; i < shape.size(); i++) {
             root.getChildren().add(shape.get(i));
         }
-        
+                
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> keyListener.keyPressed(event.getCode()));
         scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> keyListener.keyReleased(event.getCode()));
         
         stage.setScene(scene);
         stage.show();
         
-        AnimationTimer at = new AnimationTimer() {
-            /**
-             * JavaFX Animationtimer handle-method
-             * updates (tick()) and renders (updateRender()) the game 60 times per second
-             * @param now (JavaFX AnimationTimer start(long arg))
-             */
-            
-            @Override
-            public void handle(long now) {
-               handler.tick();
-               handler.updateRender();
-           }
-        };
-        at.start();
+        GameLoop gl = new GameLoop(handler, playerIndex);
+        gl.start();
     }
     
     /**
@@ -101,6 +91,14 @@ public class Game extends Application{
         keyListener = new KeyInput(handler);
         
         new Level(30, 15, handler);
-        handler.add(new Player(200, 300, ID.Player));
+        addPlayer();
+    }
+    
+    /**
+     * Adds the player to the list of game-pbjects and stores the players index
+     */
+    private void addPlayer() {
+        playerIndex = handler.getGameObjects().size();
+        handler.add(new Player(200, 300, ID.Player, handler));
     }
 }

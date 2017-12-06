@@ -25,6 +25,7 @@ public abstract class GameObject {
     public abstract Shape initRender();
     public abstract void tick();
     public abstract void updateRender();
+    public abstract Shape getShape();
 
     public int getX() {
         return x;

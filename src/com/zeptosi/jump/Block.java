@@ -49,4 +49,9 @@ public class Block extends GameObject{
         block.setY(y);
     }
     
+    @Override
+    public Shape getShape() {
+        return block;
+    }
+    
 }

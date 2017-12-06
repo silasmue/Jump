@@ -1,12 +1,12 @@
 #ant specific
-Jump/dist/
-Jump/build/
+dist/
+build/
 
 #netbeans specific
 
-Jump/nbproject/*
-!Jump/nbproject/project.properties
-!Jump/nbproject/project.xml
+nbproject/*
+!nbproject/project.properties
+!nbproject/project.xml
 
 #java specific
 *.class

@@ -19,3 +19,6 @@ Jump/nbproject/*
 *.swp
 *.DS_Store
 *.lock
+/nbproject/private/
+/build/
+/dist/

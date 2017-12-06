@@ -100,6 +100,7 @@ public class Game extends Application{
         handler = new Handler();
         keyListener = new KeyInput(handler);
         
+        new Level(30, 15, handler);
         handler.add(new Player(200, 300, ID.Player));
     }
 }

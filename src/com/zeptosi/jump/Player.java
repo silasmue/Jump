@@ -17,9 +17,23 @@ import javafx.scene.shape.Shape;
 public class Player extends GameObject{
     private Rectangle player;
     private Handler handler;
-
-    public Player(int pX, int pY, ID pID, Handler pHandler) {
-        super(pX, pY, pID);
+    
+    private int lastX;
+    private int lastY;
+    
+    private boolean jumping = false;
+    private boolean falling = true;
+    private int gravity = 1;
+    private int max_velocity = 10;
+    
+    public enum Axis {
+        X,Y;
+    }
+    
+    public Player(int pX, int pY,int pWidth, int pHeight, ID pID, Handler pHandler) {
+        super(pX, pY, pWidth, pHeight, pID);
+        lastX = x;
+        lastY = y;
         handler = pHandler;
     }
 
@@ -29,8 +43,8 @@ public class Player extends GameObject{
         player.setFill(Color.BURLYWOOD);
         player.setX(x);
         player.setY(y);
-        player.setWidth(64);
-        player.setHeight(128);
+        player.setWidth(width);
+        player.setHeight(height);
         player.setArcHeight(0);
         player.setArcWidth(0);
                 
@@ -40,14 +54,41 @@ public class Player extends GameObject{
 
     @Override
     public void tick() {
-        if(Collision()) {
-            velX += velX * -1;
-            velY += velY * -1;
-        }
+        LinkedList<GameObject> gameObject = new LinkedList<GameObject>();
+        gameObject = handler.getGameObjects();
+        
+        lastX = x;
+        lastY = y;
+        
         x += velX;
+        for(GameObject s : gameObject) {
+            if(s.getID() == ID.Block) {
+                if(Shape.intersect(player, s.getShape()).getBoundsInParent().getWidth() != -1) {
+                    collision(Shape.intersect(player, s.getShape()), Axis.X);     
+            }
+            else continue;
+            }         
+        }
+        
         y += velY;
+        for(GameObject s : gameObject) {
+            if(s.getID() == ID.Block) {
+                if(Shape.intersect(player, s.getShape()).getBoundsInParent().getWidth() != -1) {
+                    //collision(Shape.intersect(player, s.getShape()), Axis.Y);     
+            }
+            else continue;
+            }         
+        }
+        
+        
+        //if (falling || jumping) {
+        //    velY += gravity;
+        //}
+                
+        //if (velX >= max_velocity) velX = max_velocity;
+        //if (velY >= max_velocity) velY = max_velocity;
     }
-
+    
     @Override
     public void updateRender() {
         player.setX(x);
@@ -59,25 +100,42 @@ public class Player extends GameObject{
         return player;
     }
     
-    private boolean Collision() {
-        LinkedList<GameObject> gameObject = new LinkedList<GameObject>();
-        gameObject = handler.getGameObjects();
-        Shape tmpShape;
-        Shape intersection;
-        
-        for(int i = 0; i < gameObject.size(); i++) {
-            if(gameObject.get(i).getID() == ID.Block) {
-                tmpShape = gameObject.get(i).getShape();
-                intersection = Shape.intersect(tmpShape, player);
-                
-                if(intersection.getBoundsInLocal().getWidth() != -1) {
-                return true;
-                }
-                
-            }
-            else return false;
-        }
-        return false;
+    public void setJumping(boolean pJumping) {
+        jumping = true;
     }
-        
+    
+    public boolean getJumping() {
+        return jumping;
+    }
+    
+    public int getMax_velocity() {
+        return max_velocity;
+    }
+    
+    private void collision(Shape pIntersection, Axis a) {
+        if(a == Axis.X){
+            double width = pIntersection.getBoundsInParent().getWidth();
+            if(velX > 0) {
+                x -= width ;
+                velX = 0;
+            }
+            if(velX < 0) {
+                x += width ;
+                velX = 0;
+            }
+        }
+        if(a == Axis.Y){
+            double height = pIntersection.getBoundsInParent().getHeight();
+            if(velY > 0) {
+                y -= height ;
+                velY = 0;
+            }
+            if(velY < 0) {
+                y += height ; 
+                velY = 0;
+            }
+        }
+  
+    }
+           
 }

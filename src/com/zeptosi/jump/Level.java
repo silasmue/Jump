@@ -29,16 +29,16 @@ public class Level {
     
     private void testLevel() {
         for(int x = 0; x < width; x++) {
-                handler.add(new Block(x * 64, 14 * 64, ID.Block));
-                handler.add(new Block(x * 64, 15 * 64, ID.Block));
+                handler.add(new Block(x * 64, 14 * 64, 64, 64, ID.Block));
+                handler.add(new Block(x * 64, 15 * 64, 64, 64, ID.Block));
         }
         
         for(int y = 0; y < height; y++) {
-                handler.add(new Block(0 * 64, y * 64, ID.Block));
+                handler.add(new Block(0 * 64, y * 64, 64, 64, ID.Block));
         }
         
         for(int x = 10; x < 20; x++) {
-                handler.add(new Block(x * 64, 10 * 64, ID.Block));
+                handler.add(new Block(x * 64, 10 * 64, 64, 64, ID.Block));
         }
         
     }

@@ -16,12 +16,8 @@ import javafx.scene.shape.Shape;
 public class Block extends GameObject{
     private Rectangle block;
 
-    public Block(int pX, int pY, ID pID) {
-        super(pX, pY, pID);
-    }
-    
-     public Block(int pX, int pY) {
-        super(pX, pY, ID.Block);
+    public Block(int pX, int pY, int pWidth, int pHeight, ID pID) {
+        super(pX, pY, pWidth, pHeight,pID);
     }
 
     @Override
@@ -30,8 +26,8 @@ public class Block extends GameObject{
         block.setFill(Color.DARKBLUE);
         block.setX(x);
         block.setY(y);
-        block.setWidth(64);
-        block.setHeight(64);
+        block.setWidth(width);
+        block.setHeight(height);
         block.setArcHeight(0);
         block.setArcWidth(0);
         

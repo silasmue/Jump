@@ -14,12 +14,15 @@ import javafx.scene.shape.Shape;
 public abstract class GameObject {
     protected int x, y;
     protected int velX, velY;
+    protected final int width, height;
     protected ID id;
     
-    public GameObject(int pX, int pY, ID pID) {
+    public GameObject(int pX, int pY, int pWidth, int pHeight, ID pID) {
         this.x = pX;
         this.y = pY;
         this.id = pID;
+        this.width = pWidth;
+        this.height = pHeight;
     }
     
     public abstract Shape initRender();
@@ -61,6 +64,14 @@ public abstract class GameObject {
     
     public ID getID() {
         return id;
+    }
+    
+    public int getWidth() {
+        return width;
+    }
+    
+    public int getHeight() {
+        return height;
     }
     
     

@@ -99,6 +99,6 @@ public class Game extends Application{
      */
     private void addPlayer() {
         playerIndex = handler.getGameObjects().size();
-        handler.add(new Player(200, 300, ID.Player, handler));
+        handler.add(new Player(200, 300, 64, 128,ID.Player, handler));
     }
 }

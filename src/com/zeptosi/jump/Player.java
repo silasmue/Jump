@@ -15,67 +15,81 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller
  */
 public class Player extends GameObject{
-    private Rectangle hitbox;
-    private Rectangle render;
-    
+    private Rectangle player;
     private Handler handler;
     
-    private final double width;
-    private final double height;
-    
     public Player(double pX, double pY, double pWidth, double pHeight, Handler pHandler, ID pID) {
-        super(pX, pY, pID);
-        width = pWidth;
-        height = pHeight;
+        super(pWidth, pHeight, pID);
         handler = pHandler;
-
+        player = new Rectangle(pX, pY, pWidth, pHeight);
     }
-    
+
     @Override
-    public Shape init() {
-        render = new Rectangle();
-        render.setX(x);
-        render.setY(y);
-        render.setWidth(width);
-        render.setHeight(height);
-        render.setArcHeight(0);
-        render.setArcWidth(0);
+    public Shape initRender() {
+        player.setFill(Color.RED);
+        player.setArcHeight(0);
+        player.setArcWidth(0);
         
-        hitbox = render;
-        render.setFill(Color.RED);
-        return render;
+        shape = player;
+        return player;
     }
 
     @Override
     public void tick() {
-        x += velX;
-        y += velY;
-        updateHitbox();
-        
-        
         LinkedList<GameObject> gO = new LinkedList<GameObject>();
         gO = handler.getGameObjects();
+        
+        setX(getX() + velX);
         for(GameObject g : gO) {
             if(g.getID() != ID.Player) {
-                System.out.println(Physics.checkCollision(hitbox, g.getHitbox()));
+                if(Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth() != -1){
+                    if(velX > 0) {
+                        setX(getX() - Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth());
+                    }
+                    if(velX < 0) {
+                        setX(getX() + Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth());
+                    }
+                }
             }
         }
-        
+        setY(getY() + velY);
+        for(GameObject g : gO) {
+            if(g.getID() != ID.Player) {
+                if(Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth() != -1){
+                    if(velY > 0) {
+                        setY(getY() - Shape.intersect(player, g.getHitbox()).getBoundsInParent().getHeight());
+                    }
+                    if(velY < 0) {
+                        setY(getY() + Shape.intersect(player, g.getHitbox()).getBoundsInParent().getHeight());
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void updateRender() {
-        render = hitbox; //in this case 
+        shape = player;
     }
-    
+
     @Override
-    public Shape getHitbox() {
-        return hitbox;
+    public double getX() {
+        return player.getBoundsInParent().getMinX();
     }
-    
-    private void updateHitbox() {
-        hitbox.setX(x);
-        hitbox.setY(y);
+
+    @Override
+    public void setX(double x) {
+        player.setX(x);
     }
-          
+
+    @Override
+    public double getY() {
+        return player.getBoundsInParent().getMinY();
+    }
+
+    @Override
+    public void setY(double y) {
+        player.setY(y);       
+    }
+
 }

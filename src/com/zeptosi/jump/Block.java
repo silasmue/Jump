@@ -14,30 +14,24 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller <your.name at your.org>
  */
 public class Block extends GameObject{
-    private Rectangle hitbox;
-    private Rectangle render;
-    private final double width;
-    private final double height;
-   
-    public Block(double pX, double pY, double pWidth, double pHeight, ID pID) {
-        super(pX, pY, pID);
-        width = pWidth;
-        height = pHeight;
-
-    }
+    private Rectangle block;
     
+    public Block(double pX, double pY, double pWidth, double pHeight, ID pID) {
+        super(pWidth, pHeight, pID);
+        block = new Rectangle();
+        block.setX(pX);
+        block.setY(pY);
+        block.setWidth(pWidth);
+        block.setHeight(pHeight);
+    }
+
     @Override
-    public Shape init() {
-        render = new Rectangle();
-        render.setX(x);
-        render.setY(y);
-        render.setWidth(width);
-        render.setHeight(height);
-        render.setArcHeight(0);
-        render.setArcWidth(0);
-        hitbox = render;
-        render.setFill(Color.BLACK);
-        return render;
+    public Shape initRender() {
+        block.setArcHeight(0);
+        block.setArcWidth(0);
+        
+        shape = block;
+        return block;
     }
 
     @Override
@@ -47,11 +41,28 @@ public class Block extends GameObject{
 
     @Override
     public void updateRender() {
-        render = hitbox;
+        shape = block;
     }
-    
-    public Shape getHitbox() {
-        return hitbox;
+
+
+    @Override
+    public double getX() {
+       return block.getBoundsInParent().getMinX();
+    }
+
+    @Override
+    public void setX(double x) {
+        block.setY(x);
+    }
+
+    @Override
+    public double getY() {
+        return block.getBoundsInParent().getMinY();
+    }
+
+    @Override
+    public void setY(double y) {
+        block.setY(y);
     }
     
 }

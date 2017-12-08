@@ -22,7 +22,7 @@ public class Handler {
     public LinkedList<Shape> initRender() {
         LinkedList<Shape> shape = new LinkedList<Shape>();
         for(int i = 0; i < gameObject.size(); i++) {
-            shape.add(gameObject.get(i).init());
+            shape.add(gameObject.get(i).initRender());
         }
         return shape;
     }

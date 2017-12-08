@@ -13,37 +13,30 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller
  */
 public abstract class GameObject {
-    protected double x, y;
+    protected Shape shape;
     protected double velX, velY;
+    protected double width, height;
     protected ID id;
     
-    public GameObject(double pX, double pY, ID pID) {
-        this.x = pX;
-        this.y = pY;
+    public GameObject(double pWidth, double pHeight, ID pID) {
+        this.width = pWidth;
+        this.height = pHeight;
         this.id = pID;
     }
     
-    public abstract Shape init();
+    public abstract Shape initRender();
     public abstract void tick();
     public abstract void updateRender();
-    public abstract Shape getHitbox();
 
-    public double getX() {
-        return x;
+    public abstract double getX();
+    public abstract void setX(double x);
+    public abstract double getY();
+    public abstract void setY(double y);
+    
+    public Shape getHitbox() {
+        return shape;
     }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    
     public double getVelX() {
         return velX;
     }

@@ -24,10 +24,10 @@ public class KeyInput {
     public void keyPressed(KeyCode e) {
         for(GameObject i : gameObject){
             if(i.getID() == ID.Player) {
-                if(e == KeyCode.W) i.setVelY((double)-3);
-                if(e == KeyCode.S) i.setVelY((double)3);
-                if(e == KeyCode.A) i.setVelX((double)-3);
-                if(e == KeyCode.D) i.setVelX((double)3);
+                if(e == KeyCode.W) i.setVelY(-3);
+                if(e == KeyCode.S) i.setVelY(3);
+                if(e == KeyCode.A) i.setVelX(-3);
+                if(e == KeyCode.D) i.setVelX(3);
                 if(e == KeyCode.SPACE) {
                     //Jumping
                     System.out.println("JUMP");

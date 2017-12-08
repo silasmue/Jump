@@ -70,8 +70,27 @@ public class Game extends Application{
         stage.setScene(scene);
         stage.show();
         
+<<<<<<< HEAD
+        AnimationTimer at = new AnimationTimer() {
+            /**
+             * JavaFX Animationtimer handle-method
+             * updates (tick()) and renders (updateRender()) the game 60 times per second
+             * @param now (JavaFX AnimationTimer start(long arg))
+             */
+            
+            @Override
+            public void handle(long now) {
+               handler.tick((long) now);
+               handler.updateRender();
+               KeyInput.processKeys();
+               System.out.println(now);
+           }
+        };
+        at.start();
+=======
         GameLoop gl = new GameLoop(handler, playerIndex);
         gl.start();
+>>>>>>> master
     }
     
     /**

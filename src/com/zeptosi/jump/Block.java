@@ -14,24 +14,21 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller <your.name at your.org>
  */
 public class Block extends GameObject{
-    private Rectangle block;
-
-    public Block(int pX, int pY, ID pID) {
-        super(pX, pY, pID);
-    }
     
-     public Block(int pX, int pY) {
-        super(pX, pY, ID.Block);
+    private Rectangle block;
+    
+     public Block(int pX, int pY, int pWidth, int pHeight) {
+        super(pWidth, pHeight,ID.BLOCK);
+        block = new Rectangle();
+        block.setX(pX);
+        block.setY(pY);
     }
 
     @Override
     public Shape initRender() {
-        block = new Rectangle();
         block.setFill(Color.DARKBLUE);
-        block.setX(x);
-        block.setY(y);
-        block.setWidth(64);
-        block.setHeight(64);
+        block.setWidth(getWidth());
+        block.setHeight(getHeight());
         block.setArcHeight(0);
         block.setArcWidth(0);
         
@@ -39,19 +36,27 @@ public class Block extends GameObject{
     }
 
     @Override
-    public void tick() {
-        //does nothing whil game ticks
-    }
-
-    @Override
     public void updateRender() {
-        block.setX(x);
-        block.setY(y);
     }
     
     @Override
     public Shape getShape() {
         return block;
+    }
+
+    @Override
+    public void tick(long diff) {
+        
+    }
+
+    @Override
+    public int getX() {
+        return (int) block.getX();
+    }
+
+    @Override
+    public int getY() {
+        return (int) block.getY();
     }
     
 }

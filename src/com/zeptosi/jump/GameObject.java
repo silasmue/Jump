@@ -12,55 +12,83 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller
  */
 public abstract class GameObject {
-    protected int x, y;
-    protected int velX, velY;
+    
+    protected Shape shape;
+    private int width;
+    private int height;
+    protected double velX, velY;
     protected ID id;
     
-    public GameObject(int pX, int pY, ID pID) {
-        this.x = pX;
-        this.y = pY;
+    public GameObject(int pWidth, int pHeight, ID pID) {
+        this.width = pWidth;
+        this.height = pHeight;
         this.id = pID;
     }
     
     public abstract Shape initRender();
-    public abstract void tick();
+    public abstract void tick(long diff);
     public abstract void updateRender();
-    public abstract Shape getShape();
-
-    public int getX() {
-        return x;
+    public void collide(GameObject partner, Physics.direction dir){
+        
+    };
+    public Shape getShape(){
+        return shape;
     }
+    
+    public abstract int getX();
 
-    public void setX(int x) {
-        this.x = x;
-    }
+    public void setX(int x){};
 
-    public int getY() {
-        return y;
-    }
+    public abstract int getY();
 
-    public void setY(int y) {
-        this.y = y;
-    }
+    public void setY(int y) {}
 
-    public int getVelX() {
+    public double getVelX() {
         return velX;
     }
 
-    public void setVelX(int velX) {
+    public void setVelX(double velX) {
         this.velX = velX;
     }
 
-    public int getVelY() {
+    public double getVelY() {
         return velY;
     }
 
-    public void setVelY(int velY) {
+    public void setVelY(double velY) {
         this.velY = velY;
     }
     
     public ID getID() {
         return id;
+    }
+
+    /**
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * @param height the height to set
+     */
+    public void setHeight(int height) {
+        this.height = height;
     }
     
     

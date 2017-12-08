@@ -28,9 +28,8 @@ public class GameLoop extends AnimationTimer{
      * @param pHandler
      * @param pPlayerIndex 
      */
-    public GameLoop(Handler pHandler, int pPlayerIndex) {
+    public GameLoop(Handler pHandler) {
         this.handler = pHandler;
-        this.playerIndex = pPlayerIndex;
     }
     
     /**

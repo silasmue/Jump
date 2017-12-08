@@ -29,7 +29,7 @@ public class Level {
     
     private void testLevel() {
         for(int x = 0; x < width; x++) {
-                handler.add(new Block(x * 64, 14 * 64, 64, 64, ID.Block));
+                handler.add(new Block((double)x * 64, (double)14 * 64, (double)64, (double)64, ID.Block));
                 handler.add(new Block(x * 64, 15 * 64, 64, 64, ID.Block));
         }
         

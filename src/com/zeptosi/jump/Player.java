@@ -15,127 +15,64 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller
  */
 public class Player extends GameObject{
-    private Rectangle player;
+    private Rectangle hitbox;
+    private Rectangle render;
+    
     private Handler handler;
     
-    private int lastX;
-    private int lastY;
+    private final double width;
+    private final double height;
     
-    private boolean jumping = false;
-    private boolean falling = true;
-    private int gravity = 1;
-    private int max_velocity = 10;
-    
-    public enum Axis {
-        X,Y;
-    }
-    
-    public Player(int pX, int pY,int pWidth, int pHeight, ID pID, Handler pHandler) {
-        super(pX, pY, pWidth, pHeight, pID);
-        lastX = x;
-        lastY = y;
-        handler = pHandler;
-    }
+    public Player(double pX, double pY, double pWidth, double pHeight, Handler pHandler, ID pID) {
+        super(pX, pY, pID);
+        width = pWidth;
+        height = pHeight;
 
+    }
+    
     @Override
-    public Shape initRender() {
-        player = new Rectangle();
-        player.setFill(Color.BURLYWOOD);
-        player.setX(x);
-        player.setY(y);
-        player.setWidth(width);
-        player.setHeight(height);
-        player.setArcHeight(0);
-        player.setArcWidth(0);
-                
-        return player;
+    public Shape init() {
+        render = new Rectangle();
+        render.setX(x);
+        render.setY(y);
+        render.setWidth(width);
+        render.setHeight(height);
+        render.setArcHeight(0);
+        render.setArcWidth(0);
         
+        hitbox = render;
+        render.setFill(Color.RED);
+        return render;
     }
 
     @Override
     public void tick() {
-        LinkedList<GameObject> gameObject = new LinkedList<GameObject>();
-        gameObject = handler.getGameObjects();
-        
-        lastX = x;
-        lastY = y;
-        
         x += velX;
-        for(GameObject s : gameObject) {
-            if(s.getID() == ID.Block) {
-                if(Shape.intersect(player, s.getShape()).getBoundsInParent().getWidth() != -1) {
-                    collision(Shape.intersect(player, s.getShape()), Axis.X);     
-            }
-            else continue;
-            }         
-        }
-        
         y += velY;
-        for(GameObject s : gameObject) {
-            if(s.getID() == ID.Block) {
-                if(Shape.intersect(player, s.getShape()).getBoundsInParent().getWidth() != -1) {
-                    //collision(Shape.intersect(player, s.getShape()), Axis.Y);     
-            }
-            else continue;
-            }         
+        updateHitbox();
+        
+        
+        LinkedList<GameObject> gO = new LinkedList<GameObject>();
+        gO = handler.getGameObjects();
+        for(GameObject g : gO) {
+            System.out.println("hi" + Physics.checkCollision(hitbox, g.getHitbox()));
         }
         
-        
-        //if (falling || jumping) {
-        //    velY += gravity;
-        //}
-                
-        //if (velX >= max_velocity) velX = max_velocity;
-        //if (velY >= max_velocity) velY = max_velocity;
     }
-    
+
     @Override
     public void updateRender() {
-        player.setX(x);
-        player.setY(y);
+        render = hitbox; //in this case 
     }
     
     @Override
-    public Shape getShape() {
-        return player;
+    public Shape getHitbox() {
+        return hitbox;
     }
     
-    public void setJumping(boolean pJumping) {
-        jumping = true;
+    private void updateHitbox() {
+        hitbox.setX(x);
+        hitbox.setY(y);
     }
-    
-    public boolean getJumping() {
-        return jumping;
-    }
-    
-    public int getMax_velocity() {
-        return max_velocity;
-    }
-    
-    private void collision(Shape pIntersection, Axis a) {
-        if(a == Axis.X){
-            double width = pIntersection.getBoundsInParent().getWidth();
-            if(velX > 0) {
-                x -= width ;
-                velX = 0;
-            }
-            if(velX < 0) {
-                x += width ;
-                velX = 0;
-            }
-        }
-        if(a == Axis.Y){
-            double height = pIntersection.getBoundsInParent().getHeight();
-            if(velY > 0) {
-                y -= height ;
-                velY = 0;
-            }
-            if(velY < 0) {
-                y += height ; 
-                velY = 0;
-            }
-        }
-  
-    }
-           
+          
 }

@@ -14,40 +14,44 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller <your.name at your.org>
  */
 public class Block extends GameObject{
-    private Rectangle block;
+    private Rectangle hitbox;
+    private Rectangle render;
+    private final double width;
+    private final double height;
+   
+    public Block(double pX, double pY, double pWidth, double pHeight, ID pID) {
+        super(pX, pY, pID);
+        width = pWidth;
+        height = pHeight;
 
-    public Block(int pX, int pY, int pWidth, int pHeight, ID pID) {
-        super(pX, pY, pWidth, pHeight,pID);
     }
-
+    
     @Override
-    public Shape initRender() {
-        block = new Rectangle();
-        block.setFill(Color.DARKBLUE);
-        block.setX(x);
-        block.setY(y);
-        block.setWidth(width);
-        block.setHeight(height);
-        block.setArcHeight(0);
-        block.setArcWidth(0);
-        
-        return block;
+    public Shape init() {
+        render = new Rectangle();
+        render.setX(x);
+        render.setY(y);
+        render.setWidth(width);
+        render.setHeight(height);
+        render.setArcHeight(0);
+        render.setArcWidth(0);
+        hitbox = render;
+        render.setFill(Color.BLACK);
+        return render;
     }
 
     @Override
     public void tick() {
-        //does nothing whil game ticks
+        
     }
 
     @Override
     public void updateRender() {
-        block.setX(x);
-        block.setY(y);
+        render = hitbox;
     }
     
-    @Override
-    public Shape getShape() {
-        return block;
+    public Shape getHitbox() {
+        return hitbox;
     }
     
 }

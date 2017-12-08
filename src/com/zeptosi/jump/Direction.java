@@ -10,5 +10,5 @@ package com.zeptosi.jump;
  * @author Silas Müller
  */
 public enum Direction {
-        RIGHT, BOTTOM, LEFT, TOP, NONE, UNDEFINED;
+        RIGHT, BOTTOM, LEFT, TOP, NONE, COLLISION;
     }

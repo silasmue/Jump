@@ -5,6 +5,7 @@
  */
 package com.zeptosi.jump;
 
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 /**
@@ -12,25 +13,22 @@ import javafx.scene.shape.Shape;
  * @author Silas Müller
  */
 public abstract class GameObject {
-    protected int x, y;
-    protected int velX, velY;
-    protected final int width, height;
+    protected double x, y;
+    protected double velX, velY;
     protected ID id;
     
-    public GameObject(int pX, int pY, int pWidth, int pHeight, ID pID) {
+    public GameObject(double pX, double pY, ID pID) {
         this.x = pX;
         this.y = pY;
         this.id = pID;
-        this.width = pWidth;
-        this.height = pHeight;
     }
     
-    public abstract Shape initRender();
+    public abstract Shape init();
     public abstract void tick();
     public abstract void updateRender();
-    public abstract Shape getShape();
+    public abstract Shape getHitbox();
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
@@ -38,7 +36,7 @@ public abstract class GameObject {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -46,34 +44,24 @@ public abstract class GameObject {
         this.y = y;
     }
 
-    public int getVelX() {
+    public double getVelX() {
         return velX;
     }
 
-    public void setVelX(int velX) {
+    public void setVelX(double velX) {
         this.velX = velX;
     }
 
-    public int getVelY() {
+    public double getVelY() {
         return velY;
     }
 
-    public void setVelY(int velY) {
+    public void setVelY(double velY) {
         this.velY = velY;
     }
     
     public ID getID() {
         return id;
-    }
-    
-    public int getWidth() {
-        return width;
-    }
-    
-    public int getHeight() {
-        return height;
-    }
-    
-    
+    } 
     
 }

@@ -22,19 +22,15 @@ public class KeyInput {
     }
     
     public void keyPressed(KeyCode e) {
-        for(int i = 0; i < gameObject.size(); i++){
-            if(gameObject.get(i).getID() == ID.Player) {
-               Player tmpObject = (Player)gameObject.get(i);
-                if(e == KeyCode.W) tmpObject.setVelY(-3);
-                if(e == KeyCode.S) tmpObject.setVelY(3);
-                if(e == KeyCode.A) tmpObject.setVelX(-3);
-                if(e == KeyCode.D) tmpObject.setVelX(3);
+        for(GameObject i : gameObject){
+            if(i.getID() == ID.Player) {
+                if(e == KeyCode.W) i.setVelY((double)-3);
+                if(e == KeyCode.S) i.setVelY((double)3);
+                if(e == KeyCode.A) i.setVelX((double)-3);
+                if(e == KeyCode.D) i.setVelX((double)3);
                 if(e == KeyCode.SPACE) {
-                    if(!tmpObject.getJumping()) {
-                        tmpObject.setVelY(-20);
-                        tmpObject.setJumping(true);
-                    }
-                
+                    //Jumping
+                    System.out.println("JUMP");
                 }
             }
         }

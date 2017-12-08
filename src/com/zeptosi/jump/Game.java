@@ -41,10 +41,6 @@ public class Game extends Application{
      */
     private KeyInput keyListener;
     /**
-     * 
-     */
-    private int playerIndex;
-    /**
      * JavaFX start-Method
      * @param stage primary stage (see JavaFX start)
      */    
@@ -70,7 +66,7 @@ public class Game extends Application{
         stage.setScene(scene);
         stage.show();
         
-        GameLoop gl = new GameLoop(handler, playerIndex);
+        GameLoop gl = new GameLoop(handler);
         gl.start();
     }
     
@@ -98,7 +94,6 @@ public class Game extends Application{
      * Adds the player to the list of game-pbjects and stores the players index
      */
     private void addPlayer() {
-        playerIndex = handler.getGameObjects().size();
-        handler.add(new Player(200, 300, 64, 128,ID.Player, handler));
+        handler.add(new Player(200, 300, 64, 128, handler, ID.Player));
     }
 }

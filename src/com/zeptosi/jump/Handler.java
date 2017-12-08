@@ -22,7 +22,7 @@ public class Handler {
     public LinkedList<Shape> initRender() {
         LinkedList<Shape> shape = new LinkedList<Shape>();
         for(int i = 0; i < gameObject.size(); i++) {
-            shape.add(gameObject.get(i).initRender());
+            shape.add(gameObject.get(i).init());
         }
         return shape;
     }
@@ -34,8 +34,8 @@ public class Handler {
     }
     
     public void tick() {
-        for(int i = 0; i < gameObject.size(); i++) {
-            gameObject.get(i).tick();
+        for(GameObject gO : gameObject) {
+            gO.tick();
         }
     }
     

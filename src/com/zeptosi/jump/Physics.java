@@ -16,17 +16,12 @@ import javafx.scene.shape.Shape;
 public class Physics {
 
         public static Direction checkCollision(Shape object, Shape partner) {
-//        Rectangle bot = getBottom(object);
-//        Rectangle top = getTop(object);
-//        Rectangle left = getTop(object);
-//        Rectangle right = getTop(object);
             
         if (Shape.intersect(object, partner).getBoundsInParent().getWidth() != -1) {
-            System.out.println(Shape.intersect(object, partner).getBoundsInParent());
-            return Direction.UNDEFINED;
+            
+            return Direction.COLLISION;
         }
         else {
-            System.out.println(Shape.intersect(object, partner).getBoundsInParent());
             return Direction.NONE;
         }
         
@@ -75,6 +70,7 @@ public class Physics {
                 right.setArcWidth(0);
         return right;
     }
+    
 }
 
     

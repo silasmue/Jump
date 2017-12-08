@@ -87,13 +87,7 @@ public class Game extends Application{
         keyListener = new KeyInput(handler);
         
         new Level(30, 15, handler);
-        addPlayer();
-    }
-    
-    /**
-     * Adds the player to the list of game-pbjects and stores the players index
-     */
-    private void addPlayer() {
         handler.add(new Player(200, 300, 64, 128, handler, ID.Player));
     }
+
 }

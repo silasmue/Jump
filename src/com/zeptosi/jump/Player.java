@@ -27,6 +27,7 @@ public class Player extends GameObject{
         super(pX, pY, pID);
         width = pWidth;
         height = pHeight;
+        handler = pHandler;
 
     }
     
@@ -55,7 +56,9 @@ public class Player extends GameObject{
         LinkedList<GameObject> gO = new LinkedList<GameObject>();
         gO = handler.getGameObjects();
         for(GameObject g : gO) {
-            System.out.println("hi" + Physics.checkCollision(hitbox, g.getHitbox()));
+            if(g.getID() != ID.Player) {
+                System.out.println(Physics.checkCollision(hitbox, g.getHitbox()));
+            }
         }
         
     }

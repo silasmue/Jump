@@ -19,17 +19,18 @@ public class GameLoop extends AnimationTimer{
      * instance of Handler to get access to all objects in the game (GameObject)
      */
     private Handler handler;
+    private Camera cam;
     /**
      * 
      */
-    private int playerIndex;
     /**
      * 
      * @param pHandler
      * @param pPlayerIndex 
      */
-    public GameLoop(Handler pHandler) {
+    public GameLoop(Handler pHandler, Camera pCamera) {
         this.handler = pHandler;
+        this.cam = pCamera;
     }
     
     /**
@@ -39,7 +40,11 @@ public class GameLoop extends AnimationTimer{
      */
     @Override
     public void handle(long now) {
+        
         handler.tick();
-        handler.updateRender();   
+        cam.tick();
+        //handler.updateRender(); actualy not neccessary will maybe get removed
+            //not neccessary because we are working with shapes wich are already added to the panel
+        
     }    
 }

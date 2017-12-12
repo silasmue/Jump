@@ -24,13 +24,14 @@ public class KeyInput {
     public void keyPressed(KeyCode e) {
         for(GameObject i : gameObject){
             if(i.getID() == ID.Player) {
-                if(e == KeyCode.W) i.setVelY(-3);
-                if(e == KeyCode.S) i.setVelY(3);
-                if(e == KeyCode.A) i.setVelX(-3);
-                if(e == KeyCode.D) i.setVelX(3);
-                if(e == KeyCode.SPACE) {
-                    //Jumping
-                    System.out.println("JUMP");
+                Player p = (Player) i;
+                if(e == KeyCode.W) p.setVelY(-3);
+                if(e == KeyCode.S) p.setVelY(3);
+                if(e == KeyCode.A) p.setVelX(-3);
+                if(e == KeyCode.D) p.setVelX(3);
+                if(e == KeyCode.SPACE && !p.isJumping()) {
+                    p.jump();
+                    i.setVelY(-20);
                 }
             }
         }

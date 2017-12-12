@@ -40,6 +40,7 @@ public class Game extends Application{
      * instance of KeyInput which manages the keyboard input
      */
     private KeyInput keyListener;
+    private Camera cam;
     /**
      * JavaFX start-Method
      * @param stage primary stage (see JavaFX start)
@@ -50,6 +51,7 @@ public class Game extends Application{
         initGame();
         
         stage.setTitle("Jump");
+        stage.setResizable(false);
         
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, HEIGHT);
@@ -63,10 +65,12 @@ public class Game extends Application{
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> keyListener.keyPressed(event.getCode()));
         scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> keyListener.keyReleased(event.getCode()));
         
+        
+        
         stage.setScene(scene);
         stage.show();
         
-        GameLoop gl = new GameLoop(handler);
+        GameLoop gl = new GameLoop(handler, cam);
         gl.start();
     }
     
@@ -86,8 +90,10 @@ public class Game extends Application{
         handler = new Handler();
         keyListener = new KeyInput(handler);
         
-        new Level(30, 15, handler);
+        
+        new Level(100, 15, handler);
         handler.add(new Player(200, 300, 64, 128, handler, ID.Player));
+        cam = new Camera(200, 300, handler); //add Level.getStart() to get levels start point for the camera
     }
 
 }

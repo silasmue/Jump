@@ -52,7 +52,7 @@ public class Block extends GameObject{
 
     @Override
     public void setX(double x) {
-        block.setY(x);
+        block.setX(x);
     }
 
     @Override

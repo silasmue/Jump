@@ -7,7 +7,7 @@ package com.zeptosi.jump;
 
 /**
  *
- * @author Silas Müller <your.name at your.org>
+ * @author Silas Müller
  */
 public class Level {
     private int width;

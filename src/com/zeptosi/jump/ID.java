@@ -10,7 +10,7 @@ package com.zeptosi.jump;
  * @author Silas Müller
  */
 public enum ID {
-    Player(),
-    Block(),
-    Enemy();
+    PLAYER,
+    BLOCK,
+    ENEMY;
 }

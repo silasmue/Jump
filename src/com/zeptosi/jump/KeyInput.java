@@ -14,16 +14,21 @@ import javafx.scene.input.KeyCode;
  */
 public class KeyInput {
     private Handler handler;
+    private Game game;
     private LinkedList<GameObject> gameObject = new LinkedList<GameObject>();
     
-    public KeyInput(Handler pHandler) {
+    public KeyInput(Handler pHandler, Game pGame) {
         handler = pHandler;
+        game = pGame;
         gameObject = handler.getGameObjects();
     }
     
     public void keyPressed(KeyCode e) {
+        if(e == KeyCode.ESCAPE) {
+                game.esc();
+        } 
         for(GameObject i : gameObject){
-            if(i.getID() == ID.Player) {
+            if(i.getID() == ID.PLAYER) {
                 Player p = (Player) i;
                 if(e == KeyCode.W) p.setVelY(-3);
                 if(e == KeyCode.S) p.setVelY(3);
@@ -39,7 +44,7 @@ public class KeyInput {
     
     public void keyReleased(KeyCode e) {
         for(int i = 0; i < gameObject.size(); i++){
-            if(gameObject.get(i).getID() == ID.Player) {
+            if(gameObject.get(i).getID() == ID.PLAYER) {
                 if(e == KeyCode.A) gameObject.get(i).setVelX(0);
                 if(e == KeyCode.D) gameObject.get(i).setVelX(0);
                 if(e == KeyCode.W) gameObject.get(i).setVelY(0);

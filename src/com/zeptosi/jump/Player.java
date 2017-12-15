@@ -23,6 +23,7 @@ public class Player extends GameObject{
     
     private boolean jumping, falling;
     private double gravity = 0.5;
+    private int health;
     
     public Player(double pX, double pY, double pWidth, double pHeight, Handler pHandler, ID pID) {
         super(pWidth, pHeight, pID);
@@ -30,6 +31,8 @@ public class Player extends GameObject{
         player = new Rectangle(pX, pY, pWidth, pHeight);
         falling = true;
         jumping = true;
+        
+        health = 100;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class Player extends GameObject{
         
         setX(getX() + velX);
         for(GameObject g : gO) {
-            if(g.getID() != ID.Player) {
+            if(g.getID() != ID.PLAYER) {
                 if(Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velX > 0) {
                         setX(getX() - Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth());
@@ -66,7 +69,7 @@ public class Player extends GameObject{
         }
         setY(getY() + velY);
         for(GameObject g : gO) {
-            if(g.getID() != ID.Player) {
+            if(g.getID() != ID.PLAYER) {
                 if(Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velY > 0) { // collision on bot side of the player
                         setY(getY() - Shape.intersect(player, g.getHitbox()).getBoundsInParent().getHeight());
@@ -129,6 +132,14 @@ public class Player extends GameObject{
 
     public void setLastY(double lastY) {
         this.lastY = lastY;
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
     
 }

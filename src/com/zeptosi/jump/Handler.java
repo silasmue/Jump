@@ -6,6 +6,7 @@
 package com.zeptosi.jump;
 
 import java.util.LinkedList;
+import javafx.event.EventType;
 import javafx.scene.shape.Shape;
 
 /**
@@ -14,6 +15,7 @@ import javafx.scene.shape.Shape;
  */
 public class Handler {
     private LinkedList<GameObject> gameObject;
+    private HUD hud;
     
     public Handler() {
         gameObject = new LinkedList();
@@ -21,15 +23,22 @@ public class Handler {
     
     public LinkedList<Shape> initRender() {
         LinkedList<Shape> shape = new LinkedList<Shape>();
-        for(int i = 0; i < gameObject.size(); i++) {
-            shape.add(gameObject.get(i).initRender());
+        for(GameObject g : gameObject) {
+            shape.add(g.initRender());
         }
+        hud = new HUD(this); //now to be able to get player
+        
+        for(Shape s : hud.initRender()) {
+            shape.add(s);
+        }
+        
         return shape;
     }
         
     public void updateRender() {
         for(int i = 0; i < gameObject.size(); i++) {
-            gameObject.get(i).updateRender();
+            hud.updateRender();
+            //gameObject.get(i).updateRender();
         }
     }
     

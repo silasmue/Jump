@@ -29,7 +29,7 @@ public class Camera {
         //Player p = (Player) handler.getGameObjects().get(0); //Risky thing dont wanna loop double
         Player p = null;
         for(GameObject o : handler.getGameObjects()) {
-            if(o.getID() == ID.Player) {
+            if(o.getID() == ID.PLAYER) {
                  p = (Player) o; //works only for one player //working on fix but fix isnt imp. yet only for multiplayer
             }
         }

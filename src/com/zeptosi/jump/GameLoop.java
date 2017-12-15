@@ -43,8 +43,8 @@ public class GameLoop extends AnimationTimer{
         
         handler.tick();
         cam.tick();
-        //handler.updateRender(); actualy not neccessary will maybe get removed
-            //not neccessary because we are working with shapes wich are already added to the panel
+        handler.updateRender(); //actualy only updated HUD
+            
         
     }    
 }

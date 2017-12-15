@@ -7,6 +7,7 @@ package com.zeptosi.jump;
 
 import java.util.LinkedList;
 import javafx.event.EventType;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Shape;
 
 /**
@@ -19,26 +20,14 @@ public class Handler {
     
     public Handler() {
         gameObject = new LinkedList();
-    }
-    
-    public LinkedList<Shape> initRender() {
-        LinkedList<Shape> shape = new LinkedList<Shape>();
-        for(GameObject g : gameObject) {
-            shape.add(g.initRender());
-        }
         hud = new HUD(this); //now to be able to get player
-        
-        for(Shape s : hud.initRender()) {
-            shape.add(s);
-        }
-        
-        return shape;
     }
-        
-    public void updateRender() {
+            
+    public void render(GraphicsContext gc) {
+        gc.clearRect(0, 0, Game.WIDTH, Game.HEIGHT);
         for(int i = 0; i < gameObject.size(); i++) {
-            hud.updateRender();
-            //gameObject.get(i).updateRender();
+            gameObject.get(i).render(gc);
+            hud.render(gc);
         }
     }
     
@@ -54,5 +43,9 @@ public class Handler {
     
     public LinkedList<GameObject> getGameObjects() {
         return gameObject;
+    }
+    
+    public void remove(GameObject pGo) {
+        gameObject.remove(pGo);
     }
 }

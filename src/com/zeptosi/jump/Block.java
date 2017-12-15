@@ -5,6 +5,7 @@
  */
 package com.zeptosi.jump;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -17,21 +18,14 @@ public class Block extends GameObject{
     private Rectangle block;
     
     public Block(double pX, double pY, double pWidth, double pHeight, ID pID) {
-        super(pWidth, pHeight, pID);
+        super(pID);
         block = new Rectangle();
         block.setX(pX);
         block.setY(pY);
         block.setWidth(pWidth);
         block.setHeight(pHeight);
-    }
-
-    @Override
-    public Shape initRender() {
         block.setArcHeight(0);
         block.setArcWidth(0);
-        
-        shape = block;
-        return block;
     }
 
     @Override
@@ -40,8 +34,9 @@ public class Block extends GameObject{
     }
 
     @Override
-    public void updateRender() {
-        shape = block;
+    public void render(GraphicsContext gc) {
+        gc.setFill(Color.BLACK);
+        gc.fillRect(getX(), getY(), getWidth(), getHeight());
     }
 
 
@@ -63,6 +58,19 @@ public class Block extends GameObject{
     @Override
     public void setY(double y) {
         block.setY(y);
+    }
+    
+    @Override
+    public Shape getHitbox() {
+        return block;
+    }
+    
+    public double getWidth() {
+        return block.getWidth();
+    }
+    
+    public double getHeight() {
+        return block.getHeight();
     }
     
 }

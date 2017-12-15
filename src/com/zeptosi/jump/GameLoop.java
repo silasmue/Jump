@@ -7,6 +7,7 @@ package com.zeptosi.jump;
 
 import java.util.LinkedList;
 import javafx.animation.AnimationTimer;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
@@ -20,6 +21,7 @@ public class GameLoop extends AnimationTimer{
      */
     private Handler handler;
     private Camera cam;
+    private GraphicsContext gc;
     /**
      * 
      */
@@ -28,9 +30,10 @@ public class GameLoop extends AnimationTimer{
      * @param pHandler
      * @param pPlayerIndex 
      */
-    public GameLoop(Handler pHandler, Camera pCamera) {
+    public GameLoop(Handler pHandler, Camera pCamera, GraphicsContext gc) {
         this.handler = pHandler;
         this.cam = pCamera;
+        this.gc = gc;
     }
     
     /**
@@ -43,7 +46,7 @@ public class GameLoop extends AnimationTimer{
         
         handler.tick();
         cam.tick();
-        handler.updateRender(); //actualy only updated HUD
+        handler.render(gc); //actualy only updated HUD
             
         
     }    

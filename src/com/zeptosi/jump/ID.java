@@ -12,5 +12,5 @@ package com.zeptosi.jump;
 public enum ID {
     PLAYER,
     BLOCK,
-    ENEMY;
+    COIN;
 }

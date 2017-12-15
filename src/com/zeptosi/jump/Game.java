@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -35,11 +37,11 @@ public class Game extends Application{
     /**
      * width of the area which is displayed
      */
-    private final int WIDTH = 1920;
+    public static final int WIDTH = 1920;
     /**
      * height of the area which is displayed
      */
-    private final int HEIGHT = WIDTH * (9/16);
+    public static final int HEIGHT = 1080;
     /**
      * instance of Handler to get access to all objects in the game (GameObject)
      */
@@ -56,6 +58,7 @@ public class Game extends Application{
      * because we got no constuctor here
      */
     private Group root = new Group();
+    private Canvas cnvs;
     /**
      * JavaFX start-Method
      * @param stage primary stage (see JavaFX start)
@@ -70,11 +73,13 @@ public class Game extends Application{
         
         Scene scene = new Scene(root, WIDTH, HEIGHT);
                 
-        LinkedList<Shape> shape = new LinkedList<Shape>();
-        shape = handler.initRender();
-        for(int i = 0; i < shape.size(); i++) {
-            root.getChildren().add(shape.get(i));
-        }   
+        cnvs = new Canvas();
+        cnvs.setHeight(HEIGHT);
+        cnvs.setWidth(WIDTH);
+        System.out.println(cnvs.getLayoutBounds() + "" + HEIGHT);
+        GraphicsContext gc = cnvs.getGraphicsContext2D();
+        paint(gc);
+        root.getChildren().add(cnvs);
                 
         scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> keyListener.keyPressed(event.getCode()));
         scene.addEventFilter(KeyEvent.KEY_RELEASED, event -> keyListener.keyReleased(event.getCode()));
@@ -84,7 +89,7 @@ public class Game extends Application{
         stage.setScene(scene);
         stage.show();
 
-        gl = new GameLoop(handler, cam);
+        gl = new GameLoop(handler, cam, gc);
         gl.start();
         running = true;
     }
@@ -100,6 +105,11 @@ public class Game extends Application{
             running = true;
         }
     }
+    
+    public void paint(GraphicsContext gc) {
+        
+    }
+    
     
     /**
      * main-method calls JavaFX launch(args) which starts the Application (see Application)

@@ -6,11 +6,15 @@
 package com.zeptosi.jump;
 
 import java.util.LinkedList;
+import javafx.geometry.Pos;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 /**
  *
@@ -19,11 +23,10 @@ import javafx.scene.shape.StrokeLineJoin;
 public class HUD {
     private Handler handler;
     
-    private Rectangle health;
-    private Rectangle healthBorder;
-    
     private int hp = 100; //for testing
     private int frames = 0;
+    
+    private LinkedList<Shape> hud;
     
     
     public HUD(Handler pHandler) {
@@ -32,44 +35,50 @@ public class HUD {
     }
     
     public LinkedList<Shape> initRender() {
-        LinkedList<Shape> hud;
-        hud = new LinkedList<Shape>();
-        health = new Rectangle();
-        health.setX(50);
-        health.setY(50);
-        health.setOpacity(0.8);
-        health.setWidth(200);
-        health.setHeight(50);
-        health.setFill(Color.GREEN);
-        
-        healthBorder = new Rectangle();
-        healthBorder.setFill(Color.TRANSPARENT);
-        healthBorder.setX(50);
-        healthBorder.setY(50);
-        healthBorder.setStroke(Color.BLACK);
-        healthBorder.setWidth(200);
-        healthBorder.setHeight(50);
-        
-        hud.add(health);
-        hud.add(healthBorder);
-        
+
         return hud;
     }
     
-    public void updateRender() {
+    public void render(GraphicsContext gc) {
+        /*HELATHBAR*/
+        gc.setFill(Color.GREEN);
+        gc.setGlobalAlpha(0.8);
+        gc.fillRect(100, 100, getPlayerHealth() * 2,50);
+        gc.setFill(Color.BLACK);
+        gc.setGlobalAlpha(1.0);
+        gc.fillRect(100, 100, 200, 2);
+        gc.fillRect(100, 148, 200, 2);
+        gc.fillRect(300, 100, 2, 50);
+        gc.fillRect(100, 100, 2, 50);
+        /*COINS*/
+        gc.setFill(Color.GOLD);
+        gc.fillOval(100, 160, 48, 48);
+        gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.LEFT);
+        gc.setFont(new Font("Arial", 48));
+        gc.fillText("" + getPlayerCoins(), 168, 202);
         
-        for(GameObject g : handler.getGameObjects()) {
-            if(g.getID() == ID.PLAYER) {
-                //Player p = (Player) g;
-                health.setWidth(2 * hp);
-            }
-        }
     }
     
-    private void hearts() {
-        int playerHealth = 0;
-        
-        
+    private int getPlayerHealth() {
+        for(GameObject g : handler.getGameObjects()){
+            if(g.getID() == ID.PLAYER){
+                Player p = (Player) g;
+                return p.getHealth();
+            }
+        }
+        return 0; //if no player is in game player 'has' 0hp
+    }
+    
+    private int getPlayerCoins() {
+        for(GameObject g : handler.getGameObjects()){
+            if(g.getID() == ID.PLAYER){
+                Player p = (Player) g;
+                System.out.println(p.getCoins());
+                return p.getCoins();
+            }
+        }
+        return 0; //if no player is in game player 'has' 0hp
     }
  
 }

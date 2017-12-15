@@ -6,6 +6,7 @@
 package com.zeptosi.jump;
 
 import java.util.LinkedList;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -23,26 +24,21 @@ public class Player extends GameObject{
     
     private boolean jumping, falling;
     private double gravity = 0.5;
+    
     private int health;
+    private int coins;
     
     public Player(double pX, double pY, double pWidth, double pHeight, Handler pHandler, ID pID) {
-        super(pWidth, pHeight, pID);
+        super(pID);
         handler = pHandler;
         player = new Rectangle(pX, pY, pWidth, pHeight);
+        player.setFill(Color.RED);
+        player.setArcHeight(0);
+        player.setArcWidth(0);
         falling = true;
         jumping = true;
         
         health = 100;
-    }
-
-    @Override
-    public Shape initRender() {
-        player.setFill(Color.RED);
-        player.setArcHeight(0);
-        player.setArcWidth(0);
-        
-        shape = player;
-        return player;
     }
 
     @Override
@@ -55,39 +51,55 @@ public class Player extends GameObject{
         gO = handler.getGameObjects();
         
         setX(getX() + velX);
-        for(GameObject g : gO) {
-            if(g.getID() != ID.PLAYER) {
-                if(Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth() != -1){
+        for(int i = 0; i < gO.size(); i++) { //can not use enhanced for-loop because we are deleting and element of the LinkedList
+            if(gO.get(i).getID() == ID.BLOCK) {
+                if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velX > 0) {
-                        setX(getX() - Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth());
+                        setX(getX() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
                     }
                     if(velX < 0) {
-                        setX(getX() + Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth());
+                        setX(getX() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
                     }
+                }
+            }
+            if(gO.get(i).getID() == ID.COIN) {
+                if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1) {
+                    coins++;
+                    handler.remove(gO.get(i));
+                    i--; //to not miss somthing //Herr Krieg fragen
                 }
             }
         }
         setY(getY() + velY);
-        for(GameObject g : gO) {
-            if(g.getID() != ID.PLAYER) {
-                if(Shape.intersect(player, g.getHitbox()).getBoundsInParent().getWidth() != -1){
+        for(int i = 0; i < gO.size(); i++) { //can not use enhanced for-loop because we are deleting and element of the LinkedList
+            if(gO.get(i).getID() == ID.BLOCK) {
+                if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velY > 0) { // collision on bot side of the player
-                        setY(getY() - Shape.intersect(player, g.getHitbox()).getBoundsInParent().getHeight());
+                        setY(getY() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
                         falling = false;
                         jumping = false;
                     }
                     if(velY < 0) {
-                        setY(getY() + Shape.intersect(player, g.getHitbox()).getBoundsInParent().getHeight());
+                        setY(getY() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
                         velY = 0;
                     }
                 }
             }
+            if(gO.get(i).getID() == ID.COIN) {
+                if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1) {
+                    coins++;
+                    handler.remove(gO.get(i));
+                    i--;  //to not miss somthing //Herr Krieg fragen
+                }
+            }
         }
+        //System.out.println(coins);
     }
 
     @Override
-    public void updateRender() {
-        shape = player;
+    public void render(GraphicsContext gc) {
+        gc.setFill(Color.RED);
+        gc.fillRect(getX(), getY(), getWidth(), getHeight());
     }
 
     @Override
@@ -108,6 +120,11 @@ public class Player extends GameObject{
     @Override
     public void setY(double y) {
         player.setY(y);       
+    }
+    
+    @Override
+    public Shape getHitbox() {
+        return player;
     }
     
     public boolean isJumping() {
@@ -140,6 +157,18 @@ public class Player extends GameObject{
 
     public void setHealth(int health) {
         this.health = health;
+    }
+    
+    public double getWidth() {
+        return player.getWidth();
+    }
+    
+    public double getHeight() {
+        return player.getHeight();
+    }
+    
+    public int getCoins() {
+        return coins;
     }
     
 }

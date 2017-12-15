@@ -41,6 +41,10 @@ public class Level {
                 handler.add(new Block(x * 64, 10 * 64, 64, 64, ID.BLOCK));
         }
         
+        for(int x = 5; x < 10; x++) {
+                handler.add(new Coin(x * 2 * 64, 13.5 * 64, ID.COIN));
+        }
+        
     }
     
     

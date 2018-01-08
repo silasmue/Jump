@@ -9,7 +9,7 @@ The game should have...
  - [ ] a level design tool
  - [ ] nice pixelarts
  - [ ] a network multiplayer mode
- - [ ] a score system
+ - [X] a score system
  - [ ] an easy to use and modern looking interface
  
 

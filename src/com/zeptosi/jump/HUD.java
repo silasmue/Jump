@@ -7,9 +7,12 @@ package com.zeptosi.jump;
 
 import java.util.LinkedList;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -57,6 +60,13 @@ public class HUD {
         gc.setTextAlign(TextAlignment.LEFT);
         gc.setFont(new Font("Arial", 48));
         gc.fillText("" + getPlayerCoins(), 168, 202);
+        /*SCORE*/
+        gc.drawImage(Game.getTexture().getSkull(), 100, 30, 64, 50);
+        gc.setFill(Color.BLACK);
+        gc.setTextAlign(TextAlignment.LEFT);
+        gc.setFont(new Font("Arial", 50));
+        gc.fillText("" + getPlayerScore(), 168, 72);
+        
         
     }
     
@@ -74,11 +84,23 @@ public class HUD {
         for(GameObject g : handler.getGameObjects()){
             if(g.getID() == ID.PLAYER){
                 Player p = (Player) g;
-                System.out.println(p.getCoins());
                 return p.getCoins();
             }
         }
         return 0; //if no player is in game player 'has' 0hp
     }
+    
+    private int getPlayerScore() {
+        for(GameObject g : handler.getGameObjects()){
+            if(g.getID() == ID.PLAYER){
+                Player p = (Player) g;
+                return p.getScore();
+            }
+        }
+        return 0; //if no player is in game player 'has' 0hp
+    }
+
+   
+    
  
 }

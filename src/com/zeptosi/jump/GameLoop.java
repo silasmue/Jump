@@ -46,8 +46,6 @@ public class GameLoop extends AnimationTimer{
         
         handler.tick();
         cam.tick();
-        handler.render(gc); //actualy only updated HUD
-            
-        
+        handler.render(gc); //actualy only updated HUD        
     }    
 }

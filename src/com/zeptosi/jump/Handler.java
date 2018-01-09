@@ -16,10 +16,14 @@ import javafx.scene.shape.Shape;
  */
 public class Handler {
     private LinkedList<GameObject> gameObject;
+    private LinkedList<GameObject> toRemove;
+    private LinkedList<GameObject> toAdd;
     private HUD hud;
     
     public Handler() {
         gameObject = new LinkedList();
+        toRemove = new LinkedList();
+        toAdd = new LinkedList();
         hud = new HUD(this); //now to be able to get player
     }
             
@@ -32,9 +36,13 @@ public class Handler {
     }
     
     public void tick() {
+        toRemove.clear();
+        toAdd.clear();
         for(GameObject gO : gameObject) {
             gO.tick();
         }
+        gameObject.removeAll(toRemove);
+        gameObject.addAll(toAdd);
     }
     
     public void add(GameObject pGo) {
@@ -47,5 +55,13 @@ public class Handler {
     
     public void remove(GameObject pGo) {
         gameObject.remove(pGo);
+    }
+    
+    public void addToRemove(GameObject pGo) {
+        toRemove.add(pGo);
+    }
+    
+    public void addToAdd(GameObject pGo) {
+        toAdd.add(pGo);
     }
 }

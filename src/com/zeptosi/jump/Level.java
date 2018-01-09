@@ -5,6 +5,10 @@
  */
 package com.zeptosi.jump;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author Silas Müller
@@ -13,6 +17,7 @@ public class Level {
     private int width;
     private int height;
     private Handler handler;
+    private Game game;
     
     /**
      * 
@@ -24,7 +29,45 @@ public class Level {
         width = pWidth;
         height = pHeight;
         testLevel();
+    }
     
+    public Level(Handler pHandler, Game pGame) {
+        handler = pHandler;
+        game = pGame;
+        Image level = new Image("/com/zeptosi/jump/resources/level/level1.png");
+        width = (int)level.getWidth();
+        height = (int)level.getHeight();
+        PixelReader pr = level.getPixelReader();
+        System.out.println(width);
+        System.out.println(height);
+        System.out.println(pr.getColor(0, 0));
+        
+        boolean playerCreated = false;
+        
+        /*RGB-Decode Algorithmus ist geklaut von RealTutsGML (https://www.youtube.com/watch?v=1TFDOT1HiBo&list=PLWms45O3n--54U-22GDqKMRGlXROOZtMx&index=11)*/
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                int pixel = pr.getArgb(x, y);
+                int red = (pixel >> 16) & 0xff;
+                int green = (pixel >> 8) & 0xff;
+                int blue = (pixel) & 0xff;
+                if(red == 0 && green == 0 && blue == 0){
+                    handler.add(new Block((double)x * 64, (double)y * 64, 64, 64, ID.BLOCK));
+                }
+                if(red == 0 && green == 0 && blue == 255 && !playerCreated){
+                    handler.add(new Player(x * 64, y * 64, 64, 120, handler, game, ID.PLAYER));
+                    playerCreated = true;
+                }
+//                if(red == 0 && green == 255 && blue == 0) {
+//                    handler.add(new Turtle(x, y, handler, ID.ENEMY));
+//                }
+                if(red == 255 && green == 255 && blue == 0) {
+                    System.out.println("");
+                    handler.add(new Coin(x * 64 + 32, y * 64 + 32, ID.COIN));
+                }
+                
+            }
+        }
     }
     
     private void testLevel() {
@@ -45,8 +88,18 @@ public class Level {
                 handler.add(new Coin(x * 2 * 64, 13.5 * 64, ID.COIN));
         }
         
+        handler.add(new Block( 24 * 64, 13 * 64, 64, 64, ID.BLOCK));
+        handler.add(new Block( 34 * 64, 13 * 64, 64, 64, ID.BLOCK));
+        handler.add(new Turtle(25 * 64, 8 * 64, handler, ID.ENEMY));
+        handler.add(new Patrol(11 * 64, 9 * 64, handler, ID.ENEMY));
+        handler.add(new Haunter(3 * 64, 13 * 64, handler, ID.ENEMY));
+        handler.add(new End(38 * 64, 8 * 64, handler, ID.END));
+
     }
     
-    
+    private void getLevel() {
+        
+        
+    }
     
 }

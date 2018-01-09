@@ -6,6 +6,7 @@
 package com.zeptosi.jump;
 
 import java.util.LinkedList;
+import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,6 +19,7 @@ import javafx.scene.shape.Shape;
 public class Player extends GameObject{
     private Rectangle player;
     private Handler handler;
+    private Game game;
     
     private double lastX;
     private double lastY;
@@ -27,10 +29,15 @@ public class Player extends GameObject{
     
     private int health;
     private int coins;
+    private int vulnerable;
+    private int score;
     
-    public Player(double pX, double pY, double pWidth, double pHeight, Handler pHandler, ID pID) {
+    private Random r;
+    
+    public Player(double pX, double pY, double pWidth, double pHeight, Handler pHandler, Game pGame, ID pID) {
         super(pID);
         handler = pHandler;
+        game = pGame;
         player = new Rectangle(pX, pY, pWidth, pHeight);
         player.setFill(Color.RED);
         player.setArcHeight(0);
@@ -39,12 +46,18 @@ public class Player extends GameObject{
         jumping = true;
         
         health = 100;
+        vulnerable = 90; //player can be damaged = 90 for 1.5s (60ticks per second)
+        score = 0;
+        r = new Random();
     }
 
     @Override
     public void tick() {
         if(falling || jumping) {
-            velY += 0.5;
+            velY += gravity;
+        }
+        if(vulnerable < 90) {
+            vulnerable++;
         }
         
         LinkedList<GameObject> gO = new LinkedList<GameObject>();
@@ -52,48 +65,97 @@ public class Player extends GameObject{
         
         setX(getX() + velX);
         for(int i = 0; i < gO.size(); i++) { //can not use enhanced for-loop because we are deleting and element of the LinkedList
-            if(gO.get(i).getID() == ID.BLOCK) {
                 if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velX > 0) {
-                        setX(getX() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
+                        if(gO.get(i).getID() == ID.ENEMY && vulnerable == 90) {
+                            health -= 20;
+                            vulnerable = 0;
+                        }
+                        if(gO.get(i).getID() == ID.COIN) {
+                            coins++;
+                            handler.remove(gO.get(i));
+                        }
+                        if(gO.get(i).getID() == ID.BLOCK) {
+                            setX(getX() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
+                        }
+                        if(gO.get(i).getID() == ID.END) {
+                            score += 1111;
+                            //game.endLevel(score, health);
+                        }
                     }
                     if(velX < 0) {
-                        setX(getX() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
+                        if (gO.get(i).getID() == ID.ENEMY && vulnerable == 90) {
+                            health -= 20;
+                            vulnerable = 0;
+                        }
+                        if(gO.get(i).getID() == ID.COIN) {
+                            coins++;
+                            handler.remove(gO.get(i));
+                            i--; //to not miss somthing //Herr Krieg fragen
+                        }
+                        if(gO.get(i).getID() == ID.BLOCK) {
+                            setX(getX() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
+                        }
+                        if(gO.get(i).getID() == ID.END) {
+                            score += 1111;
+                            //game.endLevel(score, health);
+                        }
                     }
                 }
-            }
-            if(gO.get(i).getID() == ID.COIN) {
-                if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1) {
-                    coins++;
-                    handler.remove(gO.get(i));
-                    i--; //to not miss somthing //Herr Krieg fragen
-                }
-            }
         }
+        
         setY(getY() + velY);
         for(int i = 0; i < gO.size(); i++) { //can not use enhanced for-loop because we are deleting and element of the LinkedList
-            if(gO.get(i).getID() == ID.BLOCK) {
                 if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velY > 0) { // collision on bot side of the player
-                        setY(getY() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
-                        falling = false;
-                        jumping = false;
+                        if(gO.get(i).getID() == ID.ENEMY && vulnerable == 90) {
+                            Enemy e = (Enemy) gO.get(i);
+                            health -= 20;
+                            vulnerable = 0;
+                            if(jumping) { //noch nicht schoen spaeter fixen
+                                health += 20;
+                                vulnerable = 90;
+                                score += e.getKillScore();
+                                handler.remove(gO.get(i)); //nicht sicher ob remove(e) auch geht
+                            }
+                        }
+                        if(gO.get(i).getID() == ID.COIN) {
+                            coins++;
+                            handler.remove(gO.get(i));
+                            i--; //to not miss somthing //Herr Krieg fragen
+                        }
+                        if(gO.get(i).getID() == ID.BLOCK) {
+                            setY(getY() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
+                            falling = false;
+                            jumping = false;
+                        }
+                        if(gO.get(i).getID() == ID.END) {
+                            score += 1111;
+                            //game.endLevel(score, health);
+                        }
                     }
                     if(velY < 0) {
-                        setY(getY() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
-                        velY = 0;
+                        if(gO.get(i).getID() == ID.ENEMY && vulnerable == 90) {
+                            health -= 20;
+                            vulnerable = 0;
+                        }
+                        if(gO.get(i).getID() == ID.COIN) {
+                            coins++;
+                            handler.remove(gO.get(i));
+                        }
+                        if(gO.get(i).getID() == ID.BLOCK) {
+                            setY(getY() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
+                            velY = 0;
+                            falling = true;
+                            jumping = true;
+                        }
+                        if(gO.get(i).getID() == ID.END) {
+                            score += 1111;
+                            //game.endLevel(score, health);
+                        }
                     }
                 }
-            }
-            if(gO.get(i).getID() == ID.COIN) {
-                if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1) {
-                    coins++;
-                    handler.remove(gO.get(i));
-                    i--;  //to not miss somthing //Herr Krieg fragen
-                }
-            }
         }
-        //System.out.println(coins);
     }
 
     @Override
@@ -169,6 +231,14 @@ public class Player extends GameObject{
     
     public int getCoins() {
         return coins;
+    }
+    
+    public int getScore() {
+        return score;
+    }
+
+    public void givePoints(double points) {
+        score += points;
     }
     
 }

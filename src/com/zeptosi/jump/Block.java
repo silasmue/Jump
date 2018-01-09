@@ -37,6 +37,7 @@ public class Block extends GameObject{
     public void render(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
         gc.fillRect(getX(), getY(), getWidth(), getHeight());
+        gc.drawImage(Game.getTexture().getBlock(), getX(), getY(), 64, 64);
     }
 
 

@@ -123,7 +123,7 @@ public class Game extends Application{
         VBox mainMenu = new VBox();
         mainMenu.setSpacing(10);
         
-        Button selectLevel = new Button("Select Level");
+        Button selectLevel = new Button("Play");
         selectLevel.setMinWidth(WIDTH/10);
         selectLevel.setMinHeight(HEIGHT/10);
         selectLevel.setStyle("-fx-background-color:\n" +
@@ -139,9 +139,10 @@ public class Game extends Application{
                         );
         
         
-        
         mainMenu.getChildren().add(selectLevel);
         mainMenu.getChildren().add(exit);
+        mainMenu.setAlignment(Pos.CENTER);
+        mainMenu.setLayoutX(WIDTH/2 - selectLevel.getMinWidth());
         
         root.getChildren().add(mainMenu);
         
@@ -164,6 +165,7 @@ public class Game extends Application{
         texture = new Texture();
         
         new Level(handler, this);
+        //new Level(40, 20, handler;
         //handler.add(new Player(200, 300, 64, 128, handler, this, ID.PLAYER));
         cam = new Camera(200, 300, handler); //add Level.getStart() to get levels start point for the camera
     }
@@ -254,7 +256,6 @@ public class Game extends Application{
         
         stage.setScene(scene);
         stage.show();
-        
         gl = new GameLoop(handler, cam, gc);
         gl.start();
         running = true;
@@ -269,6 +270,24 @@ public class Game extends Application{
     public static Texture getTexture() {
         return texture;
     }
-        
-
+    
+    public void die() {
+        long time = System.currentTimeMillis();
+        while(System.currentTimeMillis() - time < 1000) {
+            continue;
+        }
+        running = false;
+        gl.stop();
+        menu();
+    }
+    
+    public void won() {
+        long time = System.currentTimeMillis();
+        while(System.currentTimeMillis() - time < 1000) {
+            continue;
+        }
+        running = false;
+        gl.stop();
+        menu();
+    }
 }

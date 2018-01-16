@@ -17,8 +17,7 @@ import javafx.scene.shape.Shape;
  */
 public class End extends GameObject{
     private Rectangle end;
-    private Handler handler;
-    public End(double pX, double pY, Handler pHandler,ID pID) {
+    public End(double pX, double pY,ID pID) {
         super(pID);
         end = new Rectangle();
         end.setX(pX);
@@ -29,12 +28,7 @@ public class End extends GameObject{
 
     @Override
     public void tick() {
-       LinkedList<GameObject> gO = new LinkedList<GameObject>();
-        //gO = handler.getGameObjects();
-       
-       for(GameObject o : gO) {
-            
-       }
+
     }
 
     @Override

@@ -36,6 +36,7 @@ public class Coin extends GameObject{
     public void render(GraphicsContext gc) {
         gc.setFill(Color.GOLD);
         gc.fillOval(getX() - radius , getY() - radius, radius*2, radius*2);
+        //gc.drawImage(Game.getTexture().getCoin(), getX() - radius, getY() - radius, 64, 64);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class Turtle extends Enemy {
         
         
         LinkedList<GameObject> gO = new LinkedList<GameObject>();
-        gO = handler.getGameObjects();
+        gO = handler.getClosest(getX(), getY());
         
         setX(getX() + velX);
         for(int i = 0; i < gO.size(); i++) {
@@ -82,6 +82,7 @@ public class Turtle extends Enemy {
     public void render(GraphicsContext gc) {
         gc.setFill(Color.GREEN);
         gc.fillRect(getX(), getY(), getWidth(), getHeight());
+        
     }
     
     public double getWidth() {

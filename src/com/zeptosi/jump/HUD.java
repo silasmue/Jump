@@ -55,6 +55,7 @@ public class HUD {
         gc.fillRect(100, 100, 2, 50);
         /*COINS*/
         gc.setFill(Color.GOLD);
+        //gc.drawImage(Game.getTexture().getCoin(), 100, 160, 48, 48);
         gc.fillOval(100, 160, 48, 48);
         gc.setFill(Color.BLACK);
         gc.setTextAlign(TextAlignment.LEFT);

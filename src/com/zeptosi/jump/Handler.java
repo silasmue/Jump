@@ -16,14 +16,11 @@ import javafx.scene.shape.Shape;
  */
 public class Handler {
     private LinkedList<GameObject> gameObject;
-    private LinkedList<GameObject> toRemove;
-    private LinkedList<GameObject> toAdd;
     private HUD hud;
+    private Player player;
     
     public Handler() {
         gameObject = new LinkedList();
-        toRemove = new LinkedList();
-        toAdd = new LinkedList();
         hud = new HUD(this); //now to be able to get player
     }
             
@@ -36,17 +33,21 @@ public class Handler {
     }
     
     public void tick() {
-        toRemove.clear();
-        toAdd.clear();
-        for(GameObject gO : gameObject) {
-            gO.tick();
+        int size = gameObject.size();
+        for(int i = 0; i < size; i++) {
+            gameObject.get(i).tick();
+            if(size != gameObject.size()) {
+                size = gameObject.size();
+                i--; //evt bugs desegen
+            }
         }
-        gameObject.removeAll(toRemove);
-        gameObject.addAll(toAdd);
     }
     
     public void add(GameObject pGo) {
         gameObject.add(pGo);
+        if(pGo.getID() == ID.PLAYER) {
+            player = (Player)gameObject.getLast();
+        }
     }
     
     public LinkedList<GameObject> getGameObjects() {
@@ -56,12 +57,24 @@ public class Handler {
     public void remove(GameObject pGo) {
         gameObject.remove(pGo);
     }
-    
-    public void addToRemove(GameObject pGo) {
-        toRemove.add(pGo);
+        
+    public void removeAll(LinkedList<GameObject> gO) {
+        gameObject.removeAll(gO);
     }
     
-    public void addToAdd(GameObject pGo) {
-        toAdd.add(pGo);
+    public LinkedList<GameObject> getClosest(double pX, double pY) {
+        LinkedList<GameObject> closest = new LinkedList();
+        for(GameObject o : gameObject) {
+            double x = o.getX();
+            double y = o.getY();
+            if(Math.abs(x - pX) <= 5 * 64 && Math.abs(y - pY) <= 5 * 64) {
+                closest.add(o);
+            }
+        }
+        return closest;
+    }
+    
+    public Player getPlayer() {
+        return player;
     }
 }

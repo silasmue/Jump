@@ -1,0 +1,13 @@
+Level creation guidlines
+
+ - surround the level with blocks (black pixels)
+ - try to avoid thick walls
+ - place mobs whisly
+
+Block:
+    every black pixel generates a block gameobject
+    every green pixel generates a turtle gameobject
+    every blue pixel generates a player gameobject
+        only place where the had of the player should be
+        because to blue pixels will generate to players
+    every yellow pixel generates a coin gameobject

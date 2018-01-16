@@ -1,0 +1,268 @@
+[Files]
+File0=Block.java
+File1=Camera.java
+File2=Coin.java
+File3=Direction.java
+File4=End.java
+File5=Enemy.java
+File6=Game.java
+File7=GameLoop.java
+File8=GameObject.java
+File9=Handler.java
+File10=Haunter.java
+File11=HUD.java
+File12=ID.java
+File13=KeyInput.java
+File14=Level.java
+File15=Patrol.java
+File16=Player.java
+File17=Texture.java
+File18=Turtle.java
+
+[Box:  - com.zeptosi.jump.Block]
+X=1305
+Y=377
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Camera]
+X=1340
+Y=1612
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Coin]
+X=972
+Y=377
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Direction]
+X=20
+Y=1837
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.End]
+X=1941
+Y=377
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Enemy]
+X=20
+Y=377
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Enemy$Type]
+X=1180
+Y=1018
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Game]
+X=1649
+Y=1018
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.GameLoop]
+X=1120
+Y=1419
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.GameObject]
+X=1106
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Handler]
+X=843
+Y=1837
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Haunter]
+X=785
+Y=1018
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.HUD]
+X=930
+Y=2078
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.ID]
+X=1768
+Y=377
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.KeyInput]
+X=1590
+Y=1419
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Level]
+X=2251
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Patrol]
+X=20
+Y=1018
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Player]
+X=294
+Y=377
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Texture]
+X=1982
+Y=1419
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Box:  - com.zeptosi.jump.Turtle]
+X=403
+Y=1018
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+FontSize=10
+FontName=MS Sans Serif
+
+[Diagram]
+comments=0
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=0
+ShowConnections=0
+Fontname=MS Sans Serif
+Fontsize=10
+ShowObjectDiagram=0
+
+[Connections]
+V0=com.zeptosi.jump.Block#com.zeptosi.jump.GameObject#Inheritends####0#0#0
+V1=com.zeptosi.jump.Camera#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V2=com.zeptosi.jump.Coin#com.zeptosi.jump.GameObject#Inheritends####0#0#0
+V3=com.zeptosi.jump.End#com.zeptosi.jump.GameObject#Inheritends####0#0#0
+V4=com.zeptosi.jump.Enemy#com.zeptosi.jump.GameObject#Inheritends####0#0#0
+V5=com.zeptosi.jump.Enemy#com.zeptosi.jump.Enemy$Type#AssociationDirected####0#0#0
+V6=com.zeptosi.jump.Game#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V7=com.zeptosi.jump.Game#com.zeptosi.jump.KeyInput#AssociationDirected####0#0#0
+V8=com.zeptosi.jump.Game#com.zeptosi.jump.Camera#AssociationDirected####0#0#0
+V9=com.zeptosi.jump.Game#com.zeptosi.jump.GameLoop#AssociationDirected####0#0#0
+V10=com.zeptosi.jump.Game#com.zeptosi.jump.Texture#AssociationDirected####0#0#0
+V11=com.zeptosi.jump.GameLoop#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V12=com.zeptosi.jump.GameLoop#com.zeptosi.jump.Camera#AssociationDirected####0#0#0
+V13=com.zeptosi.jump.GameObject#com.zeptosi.jump.ID#AssociationDirected####0#0#0
+V14=com.zeptosi.jump.Handler#com.zeptosi.jump.HUD#AssociationDirected####0#0#0
+V15=com.zeptosi.jump.Haunter#com.zeptosi.jump.Enemy#Inheritends####0#0#0
+V16=com.zeptosi.jump.Haunter#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V17=com.zeptosi.jump.HUD#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V18=com.zeptosi.jump.KeyInput#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V19=com.zeptosi.jump.KeyInput#com.zeptosi.jump.Game#AssociationDirected####0#0#0
+V20=com.zeptosi.jump.Level#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V21=com.zeptosi.jump.Level#com.zeptosi.jump.Game#AssociationDirected####0#0#0
+V22=com.zeptosi.jump.Patrol#com.zeptosi.jump.Enemy#Inheritends####0#0#0
+V23=com.zeptosi.jump.Patrol#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V24=com.zeptosi.jump.Player#com.zeptosi.jump.GameObject#Inheritends####0#0#0
+V25=com.zeptosi.jump.Player#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+V26=com.zeptosi.jump.Player#com.zeptosi.jump.Game#AssociationDirected####0#0#0
+V27=com.zeptosi.jump.Turtle#com.zeptosi.jump.Enemy#Inheritends####0#0#0
+V28=com.zeptosi.jump.Turtle#com.zeptosi.jump.Handler#AssociationDirected####0#0#0
+
+[Interactive]
+I0=
+

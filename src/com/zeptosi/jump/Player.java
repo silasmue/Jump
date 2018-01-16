@@ -11,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 
 /**
  *
@@ -31,8 +32,10 @@ public class Player extends GameObject{
     private int coins;
     private int vulnerable;
     private int score;
+    private boolean won = false;
     
     private Random r;
+    
     
     public Player(double pX, double pY, double pWidth, double pHeight, Handler pHandler, Game pGame, ID pID) {
         super(pID);
@@ -60,8 +63,8 @@ public class Player extends GameObject{
             vulnerable++;
         }
         
-        LinkedList<GameObject> gO = new LinkedList<GameObject>();
-        gO = handler.getGameObjects();
+        LinkedList<GameObject> gO = handler.getClosest(getX(), getY());
+        LinkedList<GameObject> toRemove = new LinkedList();
         
         setX(getX() + velX);
         for(int i = 0; i < gO.size(); i++) { //can not use enhanced for-loop because we are deleting and element of the LinkedList
@@ -74,14 +77,13 @@ public class Player extends GameObject{
                         if(gO.get(i).getID() == ID.COIN) {
                             coins++;
                             handler.remove(gO.get(i));
+                            gO.remove(gO.get(i));
+                            //i--;
                         }
                         if(gO.get(i).getID() == ID.BLOCK) {
                             setX(getX() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
                         }
-                        if(gO.get(i).getID() == ID.END) {
-                            score += 1111;
-                            //game.endLevel(score, health);
-                        }
+                        
                     }
                     if(velX < 0) {
                         if (gO.get(i).getID() == ID.ENEMY && vulnerable == 90) {
@@ -91,20 +93,25 @@ public class Player extends GameObject{
                         if(gO.get(i).getID() == ID.COIN) {
                             coins++;
                             handler.remove(gO.get(i));
-                            i--; //to not miss somthing //Herr Krieg fragen
+                            gO.remove(gO.get(i));
+                            //i--; //to not miss somthing //Herr Krieg fragen
                         }
                         if(gO.get(i).getID() == ID.BLOCK) {
                             setX(getX() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
                         }
                         if(gO.get(i).getID() == ID.END) {
                             score += 1111;
-                            //game.endLevel(score, health);
+                            game.won();
                         }
                     }
                 }
         }
+        //handler.removeAll(toRemove);
+        //toRemove.clear();
         
         setY(getY() + velY);
+        falling = true; //to make player not jump when falling down 
+        jumping = true;
         for(int i = 0; i < gO.size(); i++) { //can not use enhanced for-loop because we are deleting and element of the LinkedList
                 if(Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velY > 0) { // collision on bot side of the player
@@ -112,17 +119,20 @@ public class Player extends GameObject{
                             Enemy e = (Enemy) gO.get(i);
                             health -= 20;
                             vulnerable = 0;
-                            if(jumping) { //noch nicht schoen spaeter fixen
+                            if(jumping || falling) { //noch nicht schoen spaeter fixen
                                 health += 20;
                                 vulnerable = 90;
                                 score += e.getKillScore();
-                                handler.remove(gO.get(i)); //nicht sicher ob remove(e) auch geht
+                                toRemove.add(gO.get(i)); //nicht sicher ob remove(e) auch geht
+                                gO.remove(gO.get(i));
+                                //i--;
                             }
                         }
                         if(gO.get(i).getID() == ID.COIN) {
                             coins++;
                             handler.remove(gO.get(i));
-                            i--; //to not miss somthing //Herr Krieg fragen
+                            gO.remove(gO.get(i));
+                            //i--; //to not miss somthing //Herr Krieg fragen
                         }
                         if(gO.get(i).getID() == ID.BLOCK) {
                             setY(getY() - Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
@@ -131,7 +141,7 @@ public class Player extends GameObject{
                         }
                         if(gO.get(i).getID() == ID.END) {
                             score += 1111;
-                            //game.endLevel(score, health);
+                            game.won();
                         }
                     }
                     if(velY < 0) {
@@ -142,6 +152,8 @@ public class Player extends GameObject{
                         if(gO.get(i).getID() == ID.COIN) {
                             coins++;
                             handler.remove(gO.get(i));
+                            gO.remove(gO.get(i));
+                            //i--;
                         }
                         if(gO.get(i).getID() == ID.BLOCK) {
                             setY(getY() + Shape.intersect(player, gO.get(i).getHitbox()).getBoundsInParent().getHeight());
@@ -151,17 +163,34 @@ public class Player extends GameObject{
                         }
                         if(gO.get(i).getID() == ID.END) {
                             score += 1111;
-                            //game.endLevel(score, health);
+                            game.won();
                         }
                     }
-                }
+            }
         }
+        handler.removeAll(toRemove);
+        toRemove.clear();
     }
 
     @Override
     public void render(GraphicsContext gc) {
         gc.setFill(Color.RED);
         gc.fillRect(getX(), getY(), getWidth(), getHeight());
+        
+        if(health <= 0) {
+            gc.setFont(new Font("Arial", 172)); //geht noch nicht
+            gc.setFill(Color.ORANGE);
+            gc.fillText("YOU DIED", 400, 200);
+            game.die();
+        }
+        
+        if(won) {
+            gc.setFont(new Font("Arial", 172)); //geht noch nicht
+            gc.setFill(Color.ORANGE);
+            gc.fillText("YOU WON", 400, 200);
+            score += 1111;
+            game.won();
+        }
     }
 
     @Override

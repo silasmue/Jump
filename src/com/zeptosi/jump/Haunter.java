@@ -46,7 +46,7 @@ public class Haunter extends Enemy{
         
         
         LinkedList<GameObject> gO = new LinkedList<GameObject>();
-        gO = handler.getGameObjects();
+        gO = handler.getClosest(getX(), getY());
         
         setX(getX() + velX);
         dirChangeCd ++;
@@ -55,17 +55,17 @@ public class Haunter extends Enemy{
                 if(Shape.intersect(enemy, gO.get(i).getHitbox()).getBoundsInParent().getWidth() != -1){
                     if(velX > 0) {
                         setX(getX() - Shape.intersect(enemy, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
-                        handler.addToRemove(this);
+                        handler.remove(this);
                     }
                     if(velX < 0) {
                         setX(getX() + Shape.intersect(enemy, gO.get(i).getHitbox()).getBoundsInParent().getWidth());
-                        handler.addToRemove(this);
+                        handler.remove(this);
                     }
                     
                 }
             }
-            if(gO.get(i).getID() == ID.PLAYER) {
-                    Player p = (Player)gO.get(i);
+
+                    Player p = (Player) handler.getPlayer();
                     
                     if(p.getX() < enemy.getX()) {
                         if(dirChangeCd == 30) {
@@ -82,8 +82,6 @@ public class Haunter extends Enemy{
                         }
                         else velX = velX;
                     }
-                    
-            }
         }
         setY(getY() + velY);
         for(int i = 0; i < gO.size(); i++) { 

@@ -38,13 +38,10 @@ public class Level {
         width = (int)level.getWidth();
         height = (int)level.getHeight();
         PixelReader pr = level.getPixelReader();
-        System.out.println(width);
-        System.out.println(height);
-        System.out.println(pr.getColor(0, 0));
         
         boolean playerCreated = false;
         
-        /*RGB-Decode Algorithmus ist geklaut von RealTutsGML (https://www.youtube.com/watch?v=1TFDOT1HiBo&list=PLWms45O3n--54U-22GDqKMRGlXROOZtMx&index=11)*/
+        /*RGB-Decode Algorithmus (https://www.youtube.com/watch?v=1TFDOT1HiBo&list=PLWms45O3n--54U-22GDqKMRGlXROOZtMx&index=11)*/
         for(int y = 0; y < height; y++) {
             for(int x = 0; x < width; x++) {
                 int pixel = pr.getArgb(x, y);
@@ -52,18 +49,26 @@ public class Level {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
                 if(red == 0 && green == 0 && blue == 0){
-                    handler.add(new Block((double)x * 64, (double)y * 64, 64, 64, ID.BLOCK));
+                    handler.add(new Block((double)x * 64, (double)y * 64, 64, 64, ID.BLOCK)); //Black Block
                 }
                 if(red == 0 && green == 0 && blue == 255 && !playerCreated){
-                    handler.add(new Player(x * 64, y * 64, 64, 120, handler, game, ID.PLAYER));
+                    handler.add(new Player(x * 64, y * 64, 64, 120, handler, game, ID.PLAYER)); //Blue player
                     playerCreated = true;
                 }
-//                if(red == 0 && green == 255 && blue == 0) {
-//                    handler.add(new Turtle(x, y, handler, ID.ENEMY));
-//                }
+                if(red == 0 && green == 255 && blue == 0) {
+                    handler.add(new Turtle(x*64, y*64, handler, ID.ENEMY)); //Green Turtle
+                }
                 if(red == 255 && green == 255 && blue == 0) {
-                    System.out.println("");
-                    handler.add(new Coin(x * 64 + 32, y * 64 + 32, ID.COIN));
+                    handler.add(new Coin(x * 64 + 32, y * 64 + 32, ID.COIN)); //Yellow Coind
+                }
+//                if(red == 255 && green == 0 && blue == 0) {
+//                    handler.add(new Haunter(x * 64, y * 64, handler, ID.ENEMY)); //Red Haunter
+//                }
+                if(red == 255 && green == 0 && blue == 255) {
+                    handler.add(new Patrol(x * 64, y * 64, handler, ID.ENEMY)); //Purple Patrol
+                }
+                if(red == 0 && green == 255 && blue == 255) {
+                    handler.add(new End(x * 64, y * 64, ID.END)); //BlueGreen End
                 }
                 
             }
@@ -93,7 +98,7 @@ public class Level {
         handler.add(new Turtle(25 * 64, 8 * 64, handler, ID.ENEMY));
         handler.add(new Patrol(11 * 64, 9 * 64, handler, ID.ENEMY));
         handler.add(new Haunter(3 * 64, 13 * 64, handler, ID.ENEMY));
-        handler.add(new End(38 * 64, 8 * 64, handler, ID.END));
+        handler.add(new End(38 * 64, 8 * 64, ID.END));
 
     }
     
